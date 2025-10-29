@@ -43,8 +43,8 @@
                   'splash_screen': '启动页',
     'onboarding_intro': '引导页1 - 欢迎',
     'onboarding_feature_overview': '引导页2 - 功能概览',
-    'login_register': '登录_注册',
-    'home_dashboard': '首页_仪表盘',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
     'contract_scan_upload': '合同扫描上传',
     'contract_scan_processing': '合同解析中',
     'contract_scan_results': '合同解析结果',
@@ -342,6 +342,7 @@ body {
       <div class="flex flex-col space-y-4">
         <!-- 主要行动按钮 --><button data-type="button" class="btn btn-primary btn-block touch-feedback" onclick="navigateToNext()">
           <span data-type="text">下一步</span></button><!-- 次要行动按钮 --><button data-type="button" class="btn btn-ghost btn-block touch-feedback" onclick="skipOnboarding()">
+          <span data-type="text">跳过</span>
         </button>
       </div>
     </div>
@@ -555,7 +556,27 @@ function navigateToNext() {
     }, 200);
 }
 
-
+// 跳过引导流程
+function skipOnboarding() {
+    // 添加按钮点击反馈
+    const button = event.target.closest(&#39;button&#39;);
+    if (button) {
+        button.style.transform = &#39;scale(0.95)&#39;;
+        setTimeout(() => {
+            button.style.transform = &#39;&#39;;
+        }, 150);
+    }
+    
+    // 显示确认对话框
+    const confirmed = confirm(&#39;确定要跳过引导吗？您可以稍后在设置中重新查看。&#39;);
+    
+    if (confirmed) {
+        // 直接导航到主页
+        setTimeout(() => {
+            navigateTo(&#39;home_dashboard&#39;);
+        }, 200);
+    }
+}
 
 // 添加触摸优化
 document.addEventListener(&#39;touchstart&#39;, function() {}, { passive: true });
