@@ -1,0 +1,1075 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>机构指引与管辖规则</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 402
+                const height = 874
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'splash_screen': '启动页',
+    'onboarding_intro': '引导页1 - 欢迎',
+    'onboarding_feature_overview': '引导页2 - 功能概览',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
+    'contract_scan_upload': '合同扫描上传',
+    'contract_scan_processing': '合同解析中',
+    'contract_scan_results': '合同解析结果',
+    'contract_scan_compare_options': '合同对比选项',
+    'contract_scan_comparison_report': '合同对比报告',
+    'rights_protection_entry': '维权导航入口',
+    'rights_protection_problem_description': '问题描述',
+    'rights_protection_guided_inquiry': 'AI引导问询',
+    'rights_protection_analysis_results': '维权初步分析',
+    'rights_protection_action_plan': '维权行动方案',
+    'rights_protection_progress_management': '维权进度管理',
+    'rights_protection_evidence_guide': '证据清单与取证指引',
+    'rights_protection_agency_info': '机构指引与管辖规则',
+    'rights_protection_document_templates': '法律文书辅助',
+    'dialogue_simulation_mode_select': '情景模拟模式选择',
+    'dialogue_simulation_scenario_list': '预设情景库',
+    'dialogue_simulation_custom_setup': '自定义情景设置',
+    'dialogue_simulation_active': '情景对话中',
+    'dialogue_simulation_feedback_report': '模拟反馈报告',
+    'legal_education_dashboard': '普法与评估中心',
+    'legal_education_content_explore': '普法内容探索',
+    'legal_education_quiz_list': '法律测评题库',
+    'legal_education_quiz_session': '法律测评进行中',
+    'legal_education_quiz_results': '法律测评结果',
+    'legal_education_personalized_recommendations': '个性化推荐学习'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="zh-CN" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>机构指引与管辖规则 - 职场法律助手</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+/* 职场法律助手 - 移动端样式配置 */
+:root {
+    /* 基于light主题的品牌色彩定制 */
+    --color-primary: rgba(59, 130, 246, 1); /* 专业蓝色 */
+    --color-primary-content: rgba(255, 255, 255, 1);
+    --color-secondary: rgba(107, 114, 128, 1); /* 中性灰 */
+    --color-secondary-content: rgba(255, 255, 255, 1);
+    --color-accent: rgba(16, 185, 129, 1); /* 成功绿 */
+    --color-accent-content: rgba(255, 255, 255, 1);
+    
+    /* 圆角设置 - 现代专业感 */
+    --radius-box: 0.75rem;
+    --radius-field: 0.5rem;
+    --radius-selector: 0.375rem;
+    
+    /* 边框设置 */
+    --border: 1px;
+}
+
+/* 移动端安全区域适配 */
+.mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 毛玻璃效果 - 用于导航栏 */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Apple风格阴影 */
+.soft-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 触摸反馈优化 */
+.touch-feedback {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 卡片样式 */
+.legal-card {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: var(--border) solid var(--color-base-200);
+}
+
+/* 文本层级 */
+.text-hierarchy-1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-hierarchy-2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.text-hierarchy-3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 状态颜色 */
+.status-success {
+    color: var(--color-success);
+}
+
+.status-warning {
+    color: var(--color-warning);
+}
+
+.status-error {
+    color: var(--color-error);
+}
+
+/* 页面主体容器 */
+body {
+    padding-bottom: 4rem; /* 为底部导航预留空间 */
+}
+</style> <style>
+/* 机构信息页面专用样式 */
+
+/* 展开/收起动画 */
+.agency-details {
+    transition: all 0.3s ease-out;
+    overflow: hidden;
+}
+
+.agency-details.hidden {
+    max-height: 0;
+    opacity: 0;
+}
+
+.agency-details:not(.hidden) {
+    max-height: 500px;
+    opacity: 1;
+}
+
+/* 展开按钮图标旋转动画 */
+.expand-icon {
+    transition: transform 0.3s ease-out;
+}
+
+.expand-btn.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+/* 机构卡片悬停效果 */
+.legal-card {
+    transition: all 0.2s ease-out;
+}
+
+.legal-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 联系按钮样式优化 */
+.legal-card button[onclick*="callPhone"],
+.legal-card button[onclick*="openWebsite"] {
+    transition: all 0.15s ease-out;
+}
+
+.legal-card button[onclick*="callPhone"]:active,
+.legal-card button[onclick*="openWebsite"]:active {
+    transform: scale(0.95);
+}
+
+/* 法律条文框样式 */
+.legal-card .bg-base-200\/50 {
+    border-left: 3px solid var(--color-primary);
+}
+
+/* 常见问题部分样式优化 */
+.collapse-title {
+    transition: background-color 0.2s ease-out;
+}
+
+.collapse:has(input:checked) .collapse-title {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+}
+
+/* 响应式优化 */
+@media (max-width: 402px) {
+    .legal-card {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 0;
+    }
+    
+    .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* 触摸反馈增强 */
+.legal-card .btn:active {
+    transform: scale(0.95);
+}
+
+/* 复制成功提示样式 */
+.copy-success {
+    background-color: var(--color-success);
+    color: var(--color-success-content);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-selector);
+    font-size: 0.75rem;
+    position: absolute;
+    z-index: 10;
+    animation: fadeInOut 2s ease-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(10px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
+</style>
+  <script src="./assets/static/uxbot/25_6/holder.js"></script><style>
+#iig2y.spark-custom-iig2y {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 42px;
+  margin-top: 0px;
+}
+
+.iig2y-2.spark-custom-iig2y-2#iig2y-2 {
+  align-items: center;
+  display: block;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+  margin-left: -300px;
+  margin-right: 46px;
+  margin-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 11px;
+  padding-right: 17px;
+  padding-top: 0px;
+  width: 150px;
+}
+
+.im7os.spark-custom-im7os#im7os {
+  margin-bottom: 17px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: -9px;
+  text-align: left;
+}
+
+</style></head>
+  <body class="bg-base-100">
+    <div data-section-id="common_header_mobile" data-section-type="common_header" class="sticky top-0 z-50 glass-effect soft-shadow">
+  <div id="imaf" class="flex items-center justify-between h-14 px-4 imaf spark-custom-imaf">
+    <!-- 左侧：返回按钮 --><button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback" onclick="handleBackAction()">
+      <span class="iconify text-base-content ijj8 spark-custom-ijj8" data-icon="heroicons:arrow-left" data-width="24" id="ijj8"></span></button><!-- 中间：页面标题 -->
+    <h1 id="iig2y" class="text-lg font-medium text-base-content truncate px-4 header-title flex-1 text-center iig2y spark-custom-iig2y"></h1>
+    <!-- 右侧：操作按钮 -->
+    <div class="flex items-center gap-1">
+      <button id="id0e6" class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback header-action-btn" style="display: none;" onclick="handleHeaderAction()">
+        <span class="iconify text-base-content header-action-icon" data-icon="heroicons:ellipsis-horizontal" data-width="24"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<style>
+#iig2y.spark-custom-iig2y {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 42px;
+  margin-top: 0px;
+}
+
+</style><!-- 主要内容区域 -->
+    <div class="flex-1 overflow-y-auto">
+      <!-- 机构信息与管辖规则部分 -->
+      <div class="px-4 py-6">
+        <!-- 页面标题和引言 -->
+        <div id="i9s5s" class="mb-8">
+          <h1 id="im7os" class="text-hierarchy-1 text-base-content mb-4 im7os spark-custom-im7os im7os">
+            维权机构与管辖指南
+          </h1>
+          <p id="ieyzn" class="text-hierarchy-3 text-base-content/70 leading-relaxed ieyzn spark-custom-ieyzn">
+            以下是您在维权过程中可能涉及的机构信息，请根据您的情况选择合适的机构。
+          </p>
+        </div>
+        <!-- 机构信息卡片列表 -->
+        <div class="space-y-6">
+          <!-- 仲裁委员会 -->
+          <div data-repeatable="true" data-type="agency-card" class="legal-card p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h2 class="text-hierarchy-2 text-base-content mb-2 flex items-center gap-2">
+                  <span class="iconify text-primary" data-icon="heroicons:scale" data-width="24"></span>
+                  劳动争议仲裁委员会
+                </h2>
+                <p id="iosrt" class="text-sm text-base-content/60 mb-3 iosrt spark-custom-iosrt">
+                  负责处理劳动争议案件的专门机构，是解决劳动纠纷的重要途径
+                </p>
+              </div>
+              <button class="btn btn-ghost btn-sm expand-btn" onclick="toggleAgencyDetails(this)">
+                <span class="iconify expand-icon" data-icon="heroicons:chevron-down" data-width="20"></span>
+              </button>
+            </div>
+            <!-- 基本信息 -->
+            <div class="grid grid-cols-1 gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-base-content/60" data-icon="heroicons:phone" data-width="16"></span><span class="text-sm text-base-content">咨询电话：</span><button class="text-sm text-primary font-medium" onclick="callPhone(&#39;12333&#39;)">
+                  12333
+                </button>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="iconify text-base-content/60" data-icon="heroicons:globe-alt" data-width="16"></span><span class="text-sm text-base-content">官方网站：</span><button class="text-sm text-primary font-medium" onclick="openWebsite(&#39;http://www.mohrss.gov.cn&#39;)">
+                  人社部官网
+                </button>
+              </div>
+            </div>
+            <!-- 可展开的详细信息 -->
+            <div class="agency-details hidden">
+              <div class="border-t border-base-200 pt-4 space-y-4">
+                <div>
+                  <h3 class="text-sm font-medium text-base-content mb-2">
+                    主要管辖规则
+                  </h3>
+                  <ul class="text-sm text-base-content/70 space-y-1 pl-4">
+                    <li>• 劳动合同纠纷</li>
+                    <li>• 工资、加班费争议</li>
+                    <li>• 社会保险争议</li>
+                    <li>• 工伤认定争议</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-sm font-medium text-base-content mb-2">
+                    办公地址
+                  </h3>
+                  <div class="flex items-start gap-2">
+                    <span class="iconify text-base-content/60 mt-0.5" data-icon="heroicons:map-pin" data-width="16"></span>
+                    <div class="flex-1">
+                      <p class="text-sm text-base-content/70">
+                        各区县人力资源和社会保障局
+                      </p>
+                      <button class="text-sm text-primary font-medium mt-1" onclick="openMap(&#39;劳动仲裁委员会&#39;)">
+                        查看附近机构
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button class="btn btn-primary btn-sm flex-1" onclick="navigateTo(&#39;rights_protection_document_templates&#39;)">
+                    <span class="iconify" data-icon="heroicons:document-text" data-width="16"></span>
+                    申请模板</button><button class="btn btn-outline btn-sm" onclick="copyText(&#39;劳动争议仲裁委员会相关信息&#39;)">
+                    <span class="iconify" data-icon="heroicons:clipboard" data-width="16"></span>
+                    复制信息
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 人民法院 -->
+          <div data-repeatable="true" data-type="agency-card" class="legal-card p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h2 class="text-hierarchy-2 text-base-content mb-2 flex items-center gap-2">
+                  <span class="iconify text-primary" data-icon="heroicons:building-library" data-width="24"></span>
+                  人民法院
+                </h2>
+                <p class="text-sm text-base-content/60 mb-3">
+                  对仲裁结果不服或超出仲裁范围的案件，可向法院提起诉讼
+                </p>
+              </div>
+              <button class="btn btn-ghost btn-sm expand-btn" onclick="toggleAgencyDetails(this)">
+                <span class="iconify expand-icon" data-icon="heroicons:chevron-down" data-width="20"></span>
+              </button>
+            </div>
+            <!-- 基本信息 -->
+            <div class="grid grid-cols-1 gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-base-content/60" data-icon="heroicons:phone" data-width="16"></span><span class="text-sm text-base-content">诉讼服务热线：</span><button class="text-sm text-primary font-medium" onclick="callPhone(&#39;12368&#39;)">
+                  12368
+                </button>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="iconify text-base-content/60" data-icon="heroicons:globe-alt" data-width="16"></span><span class="text-sm text-base-content">网上立案：</span><button class="text-sm text-primary font-medium" onclick="openWebsite(&#39;https://ssfw.court.gov.cn&#39;)">
+                  人民法院在线服务
+                </button>
+              </div>
+            </div>
+            <!-- 可展开的详细信息 -->
+            <div class="agency-details hidden">
+              <div class="border-t border-base-200 pt-4 space-y-4">
+                <div>
+                  <h3 class="text-sm font-medium text-base-content mb-2">
+                    管辖规则
+                  </h3>
+                  <ul class="text-sm text-base-content/70 space-y-1 pl-4">
+                    <li>• 基层法院：一般劳动争议案件</li>
+                    <li>• 中级法院：重大、复杂案件</li>
+                    <li>• 按用人单位所在地或劳动合同履行地确定管辖</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-sm font-medium text-base-content mb-2">
+                    相关法律条文
+                  </h3>
+                  <div class="bg-base-200/50 p-3 rounded-lg">
+                    <p class="text-xs text-base-content/70">
+                      《劳动争议调解仲裁法》第五条：发生劳动争议，当事人不愿协商、协商不成或者达成和解协议后不履行的，可以向调解组织申请调解...
+                    </p>
+                    <button class="text-xs text-primary mt-2" onclick="copyText(&#39;劳动争议调解仲裁法第五条&#39;)">
+                      复制条文
+                    </button>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button class="btn btn-primary btn-sm flex-1" onclick="navigateTo(&#39;rights_protection_document_templates&#39;)">
+                    <span class="iconify" data-icon="heroicons:document-text" data-width="16"></span>
+                    起诉书模板</button><button class="btn btn-outline btn-sm" onclick="copyText(&#39;人民法院相关信息&#39;)">
+                    <span class="iconify" data-icon="heroicons:clipboard" data-width="16"></span>
+                    复制信息
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 劳动监察大队 -->
+          <div data-repeatable="true" data-type="agency-card" class="legal-card p-6">
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <h2 class="text-hierarchy-2 text-base-content mb-2 flex items-center gap-2">
+                  <span class="iconify text-primary" data-icon="heroicons:shield-check" data-width="24"></span>
+                  劳动监察大队
+                </h2>
+                <p class="text-sm text-base-content/60 mb-3">
+                  负责监督检查用人单位遵守劳动法律法规情况的执法部门
+                </p>
+              </div>
+              <button class="btn btn-ghost btn-sm expand-btn" onclick="toggleAgencyDetails(this)">
+                <span class="iconify expand-icon" data-icon="heroicons:chevron-down" data-width="20"></span>
+              </button>
+            </div>
+            <!-- 基本信息 -->
+            <div class="grid grid-cols-1 gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-base-content/60" data-icon="heroicons:phone" data-width="16"></span><span class="text-sm text-base-content">举报热线：</span><button class="text-sm text-primary font-medium" onclick="callPhone(&#39;12333&#39;)">
+                  12333
+                </button>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="iconify text-base-content/60" data-icon="heroicons:clock" data-width="16"></span><span class="text-sm text-base-content">受理时间：</span><span class="text-sm text-base-content/70">工作日 9:00-17:00</span>
+              </div>
+            </div>
+            <!-- 可展开的详细信息 -->
+            <div class="agency-details hidden">
+              <div class="border-t border-base-200 pt-4 space-y-4">
+                <div>
+                  <h3 class="text-sm font-medium text-base-content mb-2">
+                    主要职责范围
+                  </h3>
+                  <ul class="text-sm text-base-content/70 space-y-1 pl-4">
+                    <li>• 拖欠工资问题</li>
+                    <li>• 超时加班问题</li>
+                    <li>• 未签订劳动合同</li>
+                    <li>• 违法解除劳动关系</li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-sm font-medium text-base-content mb-2">
+                    举报材料要求
+                  </h3>
+                  <div class="bg-base-200/50 p-3 rounded-lg">
+                    <p class="text-xs text-base-content/70">
+                      需提供：身份证明、劳动关系证明、违法事实证据等材料
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button class="btn btn-primary btn-sm flex-1" onclick="navigateTo(&#39;rights_protection_document_templates&#39;)">
+                    <span class="iconify" data-icon="heroicons:document-text" data-width="16"></span>
+                    举报模板</button><button class="btn btn-outline btn-sm" onclick="copyText(&#39;劳动监察大队相关信息&#39;)">
+                    <span class="iconify" data-icon="heroicons:clipboard" data-width="16"></span>
+                    复制信息
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 常见问题部分 -->
+        <div class="mt-12">
+          <h2 class="text-hierarchy-2 text-base-content mb-6 flex items-center gap-2">
+            <span class="iconify text-primary" data-icon="heroicons:question-mark-circle" data-width="24"></span>
+            常见问题
+          </h2>
+          <div class="space-y-3">
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="radio" name="faq-accordion">
+              <div class="collapse-title text-sm font-medium">
+                如何选择合适的维权机构？
+              </div>
+              <div class="collapse-content">
+                <p class="text-sm text-base-content/70">
+                  建议先尝试劳动监察举报（免费且快速），如无效果再申请仲裁，对仲裁结果不服可向法院起诉。
+                </p>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="radio" name="faq-accordion">
+              <div class="collapse-title text-sm font-medium">
+                维权需要准备哪些材料？
+              </div>
+              <div class="collapse-content">
+                <p class="text-sm text-base-content/70">
+                  基本材料包括：身份证、劳动合同、工资条、考勤记录、相关通知等。具体要求可咨询对应机构。
+                </p>
+              </div>
+            </div>
+            <div class="collapse collapse-arrow bg-base-200">
+              <input type="radio" name="faq-accordion">
+              <div class="collapse-title text-sm font-medium">
+                维权流程大概需要多长时间？
+              </div>
+              <div class="collapse-content">
+                <p class="text-sm text-base-content/70">
+                  劳动监察一般15-30天，仲裁程序约45天，法院诉讼3-6个月不等，具体时间因案件复杂程度而异。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 移动端底部导航 --><div data-section-id="common_dock_mobile" data-section-type="common_footer" class="fixed bottom-0 left-0 right-0 z-40 glass-effect soft-shadow mobile-safe-area">
+    <div class="flex items-center justify-around h-16 px-2">
+        <!-- 首页 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="home" onclick="navigateToTab(&#39;home&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:home" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">首页</span>
+        </button>
+
+        <!-- 合同扫描 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="scan" onclick="navigateToTab(&#39;scan&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:document-magnifying-glass" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">合同扫描</span>
+        </button>
+
+        <!-- 维权导航 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="rights" onclick="navigateToTab(&#39;rights&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:scale" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">维权导航</span>
+        </button>
+
+        <!-- 情景训练 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="training" onclick="navigateToTab(&#39;training&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">情景训练</span>
+        </button>
+
+        <!-- 个人中心 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="profile" onclick="navigateToTab(&#39;profile&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:user" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">个人</span>
+        </button>
+    </div>
+</div>
+
+<style>
+[data-section-id="common_dock_mobile"] {
+    border-top: var(--border) solid var(--color-base-200);
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab {
+    min-width: 60px;
+    border-radius: var(--radius-field);
+    transition: all 0.2s ease-in-out;
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab.active .dock-icon {
+    color: var(--color-primary) !important;
+    opacity: 1 !important;
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab.active .dock-label {
+    color: var(--color-primary) !important;
+    opacity: 1 !important;
+    font-weight: 500;
+}
+
+/* 确保页面底部有足够空间 */
+body {
+    padding-bottom: 4rem; /* 为dock留出空间 */
+}
+</style>
+
+<script>
+(function() {
+    // 导航到对应标签页的主页面
+    window.navigateToTab = function(tabId) {
+        const tabToPageMapping = {
+            &#39;home&#39;: &#39;home_dashboard&#39;,
+            &#39;scan&#39;: &#39;contract_scan_upload&#39;,
+            &#39;rights&#39;: &#39;rights_protection_entry&#39;,
+            &#39;training&#39;: &#39;dialogue_simulation_mode_select&#39;,
+            &#39;education&#39;: &#39;legal_education_dashboard&#39;,
+            &#39;profile&#39;: &#39;profile_settings&#39;
+        };
+
+        const targetPage = tabToPageMapping[tabId];
+        if (targetPage) {
+            // 先更新激活状态
+            setActiveDockTab(tabId);
+            // 然后导航
+            navigateTo(targetPage);
+        }
+    };
+
+    // 隐藏/显示dock的函数
+    window.toggleDock = function(show) {
+        const dock = document.querySelector(&#39;[data-section-id="common_dock_mobile"]&#39;);
+        if (dock) {
+            dock.style.display = show ? &#39;block&#39; : &#39;none&#39;;
+            // 相应调整body的padding-bottom
+            document.body.style.paddingBottom = show ? &#39;4rem&#39; : &#39;0&#39;;
+        }
+    };
+
+    // 检查是否需要显示dock
+    window.shouldShowDock = function(pageId) {
+        // 主要功能页面显示dock
+        const dockPages = [
+            &#39;home_dashboard&#39;,
+            &#39;contract_scan_upload&#39;, &#39;contract_scan_processing&#39;, &#39;contract_scan_results&#39;, &#39;contract_scan_history&#39;,
+            &#39;rights_protection_entry&#39;, &#39;rights_protection_problem_description&#39;, &#39;rights_protection_progress_management&#39;,
+            &#39;dialogue_simulation_mode_select&#39;, &#39;dialogue_simulation_active&#39;, &#39;dialogue_simulation_history&#39;,
+            &#39;legal_education_dashboard&#39;, &#39;legal_education_content_explore&#39;, &#39;legal_education_quiz_list&#39;,
+            &#39;profile_settings&#39;, &#39;account_security&#39;, &#39;notification_center&#39;
+        ];
+        return dockPages.includes(pageId);
+    };
+
+    // 根据当前页面自动显示/隐藏dock
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        const showDock = shouldShowDock(currentPage);
+        toggleDock(showDock);
+    });
+})();
+</script><script>
+(function() {
+    // 全局应用状态管理
+    window.APP_GLOBALS = window.APP_GLOBALS || {};
+    
+    // 全局导航函数
+    window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        
+        if (isInIframe) {
+            window.parent.postMessage({
+                type: &#39;iframeNavigation&#39;,
+                targetPageId: targetPageId
+            }, &#39;*&#39;);
+        } else {
+            window.location.href = targetFileName;
+        }
+    };
+
+    // 返回导航函数
+    window.goBack = function() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，导航到首页
+            navigateTo(&#39;home_dashboard&#39;);
+        }
+    };
+
+    // 底部导航栏激活状态管理
+    window.setActiveDockTab = function(tabId) {
+        const allTabs = document.querySelectorAll(&#39;.dock-tab&#39;);
+        allTabs.forEach(tab => {
+            const isActive = tab.dataset.tabId === tabId;
+            tab.classList.toggle(&#39;active&#39;, isActive);
+            
+            const icon = tab.querySelector(&#39;.dock-icon&#39;);
+            const label = tab.querySelector(&#39;.dock-label&#39;);
+            
+            if (isActive) {
+                icon.classList.add(&#39;text-primary&#39;);
+                icon.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.add(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            } else {
+                icon.classList.remove(&#39;text-primary&#39;);
+                icon.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.remove(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            }
+        });
+    };
+
+    // 显示/隐藏加载状态
+    window.showLoading = function(message = &#39;处理中...&#39;) {
+        const loading = document.createElement(&#39;div&#39;);
+        loading.id = &#39;global-loading&#39;;
+        loading.className = &#39;fixed inset-0 z-50 flex items-center justify-center bg-base-100/80 backdrop-blur-sm&#39;;
+        loading.innerHTML = `
+            <div class="flex flex-col items-center gap-4">
+                <span class="loading loading-spinner text-primary loading-lg"></span>
+                <p class="text-base-content/70">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loading);
+    };
+
+    window.hideLoading = function() {
+        const loading = document.getElementById(&#39;global-loading&#39;);
+        if (loading) {
+            loading.remove();
+        }
+    };
+
+    // Toast 通知函数
+    window.showToast = function(message, type = &#39;info&#39;, duration = 3000) {
+        const toast = document.createElement(&#39;div&#39;);
+        toast.className = `alert alert-${type} fixed top-4 left-4 right-4 z-50 shadow-lg`;
+        
+        const iconMap = {
+            &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+            &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+            &#39;error&#39;: &#39;heroicons:x-circle&#39;,
+            &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;
+        };
+        
+        toast.innerHTML = `
+            <span class="iconify" data-icon="${iconMap[type]}" data-width="24"></span>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    };
+
+    // 页面加载完成后的初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 检测当前页面并设置对应的dock激活状态
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        
+        // 页面到底部导航标签的映射
+        const pageToTabMapping = {
+            &#39;home_dashboard&#39;: &#39;home&#39;,
+            &#39;contract_scan_upload&#39;: &#39;scan&#39;,
+            &#39;contract_scan_processing&#39;: &#39;scan&#39;,
+            &#39;contract_scan_results&#39;: &#39;scan&#39;,
+            &#39;contract_scan_history&#39;: &#39;scan&#39;,
+            &#39;rights_protection_entry&#39;: &#39;rights&#39;,
+            &#39;rights_protection_problem_description&#39;: &#39;rights&#39;,
+            &#39;rights_protection_progress_management&#39;: &#39;rights&#39;,
+            &#39;dialogue_simulation_mode_select&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_active&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_history&#39;: &#39;training&#39;,
+            &#39;legal_education_dashboard&#39;: &#39;education&#39;,
+            &#39;legal_education_content_explore&#39;: &#39;education&#39;,
+            &#39;legal_education_quiz_list&#39;: &#39;education&#39;,
+            &#39;profile_settings&#39;: &#39;profile&#39;,
+            &#39;profile_edit&#39;: &#39;profile&#39;,
+            &#39;account_security&#39;: &#39;profile&#39;
+        };
+        
+        const activeTab = pageToTabMapping[currentPage];
+        if (activeTab) {
+            setActiveDockTab(activeTab);
+        }
+    });
+
+    // 合同扫描相关函数
+    window.contractScanUtils = {
+        // 模拟文件上传
+        uploadFile: function(file, callback) {
+            showLoading(&#39;正在上传合同文件...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback(true);
+            }, 2000);
+        },
+        
+        // 模拟AI解析
+        analyzeContract: function(callback) {
+            showLoading(&#39;AI正在解析合同内容...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    riskLevel: &#39;medium&#39;,
+                    keyPoints: [&#39;试用期条款&#39;, &#39;薪酬结构&#39;, &#39;工作时间&#39;],
+                    suggestions: [&#39;建议澄清薪酬构成&#39;, &#39;确认加班费计算方式&#39;]
+                });
+            }, 3000);
+        }
+    };
+
+    // 维权导航相关函数
+    window.rightsProtectionUtils = {
+        // 生成维权方案
+        generateActionPlan: function(problemData, callback) {
+            showLoading(&#39;AI正在分析您的情况...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    actionType: &#39;劳动仲裁&#39;,
+                    steps: [&#39;收集证据&#39;, &#39;提交申请&#39;, &#39;参加仲裁&#39;],
+                    timeline: &#39;预计2-3个月&#39;
+                });
+            }, 2500);
+        }
+    };
+
+})();
+</script><script>
+(function() {
+    // 页面初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 设置头部信息
+        updateMobileHeader({
+            title: &#39;机构指引与管辖规则&#39;,
+            showBack: true,
+            onBack: () => navigateTo(&#39;rights_protection_progress_management&#39;)
+        });
+    });
+
+    // 展开/收起机构详细信息
+    window.toggleAgencyDetails = function(button) {
+        const card = button.closest(&#39;.legal-card&#39;);
+        const details = card.querySelector(&#39;.agency-details&#39;);
+        const isExpanded = !details.classList.contains(&#39;hidden&#39;);
+        
+        if (isExpanded) {
+            // 收起
+            details.classList.add(&#39;hidden&#39;);
+            button.classList.remove(&#39;expanded&#39;);
+        } else {
+            // 展开
+            details.classList.remove(&#39;hidden&#39;);
+            button.classList.add(&#39;expanded&#39;);
+        }
+    };
+
+    // 拨打电话
+    window.callPhone = function(phoneNumber) {
+        // 在移动端尝试拨打电话
+        if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+            window.location.href = `tel:${phoneNumber}`;
+        } else {
+            // 桌面端复制电话号码
+            copyText(phoneNumber);
+            showToast(`电话号码 ${phoneNumber} 已复制到剪贴板`, &#39;info&#39;);
+        }
+    };
+
+    // 打开网站
+    window.openWebsite = function(url) {
+        // 在新窗口打开网站
+        window.open(url, &#39;_blank&#39;);
+    };
+
+    // 打开地图应用
+    window.openMap = function(location) {
+        const encodedLocation = encodeURIComponent(location);
+        
+        // 检测设备类型并打开对应的地图应用
+        if (navigator.userAgent.match(/iPhone|iPad|iPod/i)) {
+            // iOS设备 - 打开Apple Maps
+            window.location.href = `maps://maps.apple.com/?q=${encodedLocation}`;
+        } else if (navigator.userAgent.match(/Android/i)) {
+            // Android设备 - 打开Google Maps
+            window.location.href = `geo:0,0?q=${encodedLocation}`;
+        } else {
+            // 桌面端 - 打开Google Maps网页版
+            window.open(`https://maps.google.com/maps?q=${encodedLocation}`, &#39;_blank&#39;);
+        }
+    };
+
+    // 复制文本到剪贴板
+    window.copyText = function(text) {
+        if (navigator.clipboard &amp;&amp; window.isSecureContext) {
+            // 现代浏览器
+            navigator.clipboard.writeText(text).then(() => {
+                showCopySuccess();
+            }).catch(() => {
+                fallbackCopyText(text);
+            });
+        } else {
+            // 降级方案
+            fallbackCopyText(text);
+        }
+    };
+
+    // 降级复制方案
+    function fallbackCopyText(text) {
+        const textArea = document.createElement(&#39;textarea&#39;);
+        textArea.value = text;
+        textArea.style.position = &#39;fixed&#39;;
+        textArea.style.left = &#39;-999999px&#39;;
+        textArea.style.top = &#39;-999999px&#39;;
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand(&#39;copy&#39;);
+            showCopySuccess();
+        } catch (err) {
+            showToast(&#39;复制失败，请手动复制&#39;, &#39;error&#39;);
+        }
+        
+        document.body.removeChild(textArea);
+    }
+
+    // 显示复制成功提示
+    function showCopySuccess() {
+        showToast(&#39;信息已复制到剪贴板&#39;, &#39;success&#39;, 2000);
+    }
+
+    // 模拟业务逻辑函数（防止页面错误）
+    window.getAgencyInfo = function(agencyType) {
+        // 模拟获取机构信息
+        return {
+            name: agencyType,
+            phone: &#39;12333&#39;,
+            website: &#39;http://example.com&#39;,
+            address: &#39;示例地址&#39;
+        };
+    };
+
+    window.searchNearbyAgencies = function(location) {
+        // 模拟搜索附近机构
+        showLoading(&#39;正在搜索附近机构...&#39;);
+        setTimeout(() => {
+            hideLoading();
+            showToast(&#39;已为您找到3个附近机构&#39;, &#39;success&#39;);
+        }, 1500);
+    };
+
+    window.downloadTemplate = function(templateType) {
+        // 模拟下载模板
+        showToast(`正在准备${templateType}模板...`, &#39;info&#39;);
+        setTimeout(() => {
+            showToast(&#39;模板准备完成&#39;, &#39;success&#39;);
+        }, 1000);
+    };
+
+})();
+</script>
+  
+
+<script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+  </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

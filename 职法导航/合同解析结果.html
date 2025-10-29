@@ -1,0 +1,1077 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>合同解析结果</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 402
+                const height = 874
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'splash_screen': '启动页',
+    'onboarding_intro': '引导页1 - 欢迎',
+    'onboarding_feature_overview': '引导页2 - 功能概览',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
+    'contract_scan_upload': '合同扫描上传',
+    'contract_scan_processing': '合同解析中',
+    'contract_scan_results': '合同解析结果',
+    'contract_scan_compare_options': '合同对比选项',
+    'contract_scan_comparison_report': '合同对比报告',
+    'rights_protection_entry': '维权导航入口',
+    'rights_protection_problem_description': '问题描述',
+    'rights_protection_guided_inquiry': 'AI引导问询',
+    'rights_protection_analysis_results': '维权初步分析',
+    'rights_protection_action_plan': '维权行动方案',
+    'rights_protection_progress_management': '维权进度管理',
+    'rights_protection_evidence_guide': '证据清单与取证指引',
+    'rights_protection_agency_info': '机构指引与管辖规则',
+    'rights_protection_document_templates': '法律文书辅助',
+    'dialogue_simulation_mode_select': '情景模拟模式选择',
+    'dialogue_simulation_scenario_list': '预设情景库',
+    'dialogue_simulation_custom_setup': '自定义情景设置',
+    'dialogue_simulation_active': '情景对话中',
+    'dialogue_simulation_feedback_report': '模拟反馈报告',
+    'legal_education_dashboard': '普法与评估中心',
+    'legal_education_content_explore': '普法内容探索',
+    'legal_education_quiz_list': '法律测评题库',
+    'legal_education_quiz_session': '法律测评进行中',
+    'legal_education_quiz_results': '法律测评结果',
+    'legal_education_personalized_recommendations': '个性化推荐学习'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="zh" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>合同解析结果 - 职场法律助手</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+/* 职场法律助手 - 移动端样式配置 */
+:root {
+    /* 基于light主题的品牌色彩定制 */
+    --color-primary: rgba(59, 130, 246, 1); /* 专业蓝色 */
+    --color-primary-content: rgba(255, 255, 255, 1);
+    --color-secondary: rgba(107, 114, 128, 1); /* 中性灰 */
+    --color-secondary-content: rgba(255, 255, 255, 1);
+    --color-accent: rgba(16, 185, 129, 1); /* 成功绿 */
+    --color-accent-content: rgba(255, 255, 255, 1);
+    
+    /* 圆角设置 - 现代专业感 */
+    --radius-box: 0.75rem;
+    --radius-field: 0.5rem;
+    --radius-selector: 0.375rem;
+    
+    /* 边框设置 */
+    --border: 1px;
+}
+
+/* 移动端安全区域适配 */
+.mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 毛玻璃效果 - 用于导航栏 */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Apple风格阴影 */
+.soft-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 触摸反馈优化 */
+.touch-feedback {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 卡片样式 */
+.legal-card {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: var(--border) solid var(--color-base-200);
+}
+
+/* 文本层级 */
+.text-hierarchy-1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-hierarchy-2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.text-hierarchy-3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 状态颜色 */
+.status-success {
+    color: var(--color-success);
+}
+
+.status-warning {
+    color: var(--color-warning);
+}
+
+.status-error {
+    color: var(--color-error);
+}
+
+/* 页面主体容器 */
+body {
+    padding-bottom: 4rem; /* 为底部导航预留空间 */
+}
+</style> <style>
+/* 合同解析结果页面专用样式 */
+
+/* 风险等级颜色增强 */
+.risk-indicator-high {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.risk-indicator-medium {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.risk-indicator-low {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+/* 条款卡片悬停效果 */
+.collapse:hover {
+    background-color: var(--color-base-200);
+    transition: background-color 0.2s ease;
+}
+
+/* 高风险条款特殊样式 */
+.high-risk-clause {
+    position: relative;
+    overflow: hidden;
+}
+
+.high-risk-clause::before {
+    content: &#39;&#39;;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--color-error) 0%, rgba(239, 68, 68, 0.5) 100%);
+}
+
+/* 操作按钮增强效果 */
+.action-button {
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.action-button::before {
+    content: &#39;&#39;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.action-button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* 底部操作栏毛玻璃效果 */
+.bottom-actions {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* 文本渐变效果 */
+.gradient-text {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 卡片阴影增强 */
+.enhanced-shadow {
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.05),
+        0 4px 12px rgba(0, 0, 0, 0.03),
+        0 8px 24px rgba(0, 0, 0, 0.02);
+}
+
+/* 响应式间距调整 */
+@media (max-width: 402px) {
+    .legal-card {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+        border-radius: 0;
+    }
+    
+    .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-in {
+    animation: slideInUp 0.3s ease-out;
+}
+
+/* 触觉反馈增强 */
+.touch-feedback:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* 状态指示器脉冲效果 */
+.pulse-indicator {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* 折叠面板图标旋转 */
+.collapse-arrow .collapse-title:after {
+    transition: transform 0.2s ease;
+}
+
+.collapse[open] .collapse-title:after {
+    transform: rotate(180deg);
+}
+</style>
+  <script src="./assets/static/uxbot/25_6/holder.js"></script><style>
+.ii9hkp.spark-custom-ii9hkp#ii9hkp {
+  align-items: center;
+  color: black;
+  display: block;
+  flex-direction: row;
+  font-size: 19.125px;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 125px;
+  margin-top: 0px;
+}
+
+.ixtuia.spark-custom-ixtuia#ixtuia {
+  font-size: 14.875px;
+  width: 60px;
+}
+
+.id80qt.spark-custom-id80qt#id80qt,
+#ib45t5.spark-custom-ib45t5 {
+  padding-bottom: 0px;
+  padding-left: 7px;
+  padding-right: 10px;
+  padding-top: 0px;
+  width: 125px;
+}
+
+#inmekl.spark-custom-inmekl,
+#ibe0wi.spark-custom-ibe0wi {
+  width: 60px;
+}
+
+#i79248.spark-custom-i79248 {
+  flex-wrap: nowrap;
+}
+
+#ibvlng.spark-custom-ibvlng {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  opacity: 0.8;
+  padding-bottom: 0px;
+  padding-left: 7px;
+  padding-right: 10px;
+  padding-top: 0px;
+  width: 125px;
+}
+
+#iex4f.spark-custom-iex4f {
+  padding-bottom: 0px;
+  padding-left: 5.75px;
+  padding-right: 5.75px;
+  padding-top: 0px;
+}
+
+</style></head>
+  <body class="bg-base-100 min-h-screen flex flex-col">
+    <div data-section-id="common_header_mobile" data-section-type="common_header" class="sticky top-0 z-50 glass-effect soft-shadow">
+  <div id="ir3x" class="flex items-center justify-between h-14 px-4 ir3x spark-custom-ir3x ir3x">
+    <!-- 左侧：返回按钮 --><button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback" onclick="handleBackAction()">
+      <span class="iconify text-base-content" data-icon="heroicons:arrow-left" data-width="24"></span></button><!-- 中间：页面标题 --><!-- 右侧：操作按钮 -->
+    <div class="flex items-center gap-1">
+      <button id="i45th" class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback header-action-btn" style="display: none;" onclick="handleHeaderAction()">
+        <span class="iconify text-base-content header-action-icon" data-icon="heroicons:ellipsis-horizontal" data-width="24"></span>
+      </button>
+    </div>
+    <p id="ii9hkp" class="text-base-content/80 text-sm irwaz ii9hkp spark-custom-ii9hkp ii9hkp">
+      合同解析结果
+    </p>
+  </div>
+</div>
+<style>
+.ii9hkp.spark-custom-ii9hkp#ii9hkp {
+  align-items: center;
+  color: black;
+  display: block;
+  flex-direction: row;
+  font-size: 19.125px;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 125px;
+  margin-top: 0px;
+}
+
+</style>
+    <div id="ixhgu" class="flex-1 px-4 py-6 space-y-6 ixhgu spark-custom-ixhgu">
+      <!-- 合同摘要 -->
+      <section class="legal-card p-6">
+        <h2 class="text-hierarchy-1 text-base-content mb-4 flex items-center gap-2">
+          <span class="iconify text-primary" data-icon="heroicons:document-text" data-width="24"></span><span id="i72vp" class="i72vp spark-custom-i72vp">合同摘要</span>
+        </h2>
+        <div class="space-y-4">
+          <!-- 核心条款1 -->
+          <div class="collapse collapse-arrow bg-base-200/50">
+            <input type="radio" name="contract-clauses" id="iypcv" class="iypcv spark-custom-iypcv">
+            <div class="collapse-title text-hierarchy-3 font-medium">
+              工作内容与职责
+            </div>
+            <div class="collapse-content">
+              <p class="text-base-content/80 leading-relaxed">
+                您将担任软件开发工程师，主要负责前端开发工作，包括但不限于用户界面设计实现、交互功能开发、代码优化等。工作地点为公司总部，需要与产品团队密切配合。
+              </p>
+            </div>
+          </div>
+          <!-- 核心条款2 -->
+          <div class="collapse collapse-arrow bg-base-200/50">
+            <input type="radio" name="contract-clauses" id="i1sm4" class="i1sm4 spark-custom-i1sm4">
+            <div class="collapse-title text-hierarchy-3 font-medium">
+              薪酬福利结构
+            </div>
+            <div class="collapse-content">
+              <p class="text-base-content/80 leading-relaxed">
+                基本工资为每月15,000元，另有绩效奖金、年终奖金等。公司提供五险一金、带薪年假、培训机会等福利。薪资每月15日发放。
+              </p>
+            </div>
+          </div>
+          <!-- 核心条款3 -->
+          <div class="collapse collapse-arrow bg-base-200/50">
+            <input type="radio" name="contract-clauses" id="inczv" class="inczv spark-custom-inczv">
+            <div class="collapse-title text-hierarchy-3 font-medium">
+              工作时间安排
+            </div>
+            <div class="collapse-content">
+              <p class="text-base-content/80 leading-relaxed">
+                标准工作时间为每周40小时，周一至周五上午9:00-下午6:00，中午休息1小时。如需加班，公司将按照劳动法规定支付加班费。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 风险评估与建议 -->
+      <section id="iz6pc" class="legal-card p-6 iz6pc spark-custom-iz6pc">
+        <h2 id="iy13j" class="text-hierarchy-1 text-base-content mb-4 flex items-center gap-2 iy13j spark-custom-iy13j">
+          <span class="iconify text-warning" data-icon="heroicons:shield-exclamation" data-width="24"></span><span>风险评估</span>
+        </h2>
+        <!-- 风险等级指示 -->
+        <div class="flex items-center gap-3 mb-4 p-4 bg-warning/10 rounded-lg border border-warning/20">
+          <div class="indicator">
+            <span id="iex4f" class="indicator-item badge badge-warning iex4f spark-custom-iex4f">中</span>
+            <div class="w-12 h-12 rounded-full bg-warning/20 flex items-center justify-center">
+              <span class="iconify text-warning" data-icon="heroicons:exclamation-triangle" data-width="24"></span>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-hierarchy-2 text-base-content">
+              整体风险等级：中等
+            </h3>
+            <p class="text-base-content/70 text-sm">发现2处需要关注的条款</p>
+          </div>
+        </div>
+        <!-- 评估意见 -->
+        <div class="space-y-3">
+          <div class="flex items-start gap-3">
+            <span class="iconify text-accent mt-1" data-icon="heroicons:check-circle" data-width="16"></span>
+            <p id="irwaz" class="text-base-content/80 text-sm irwaz spark-custom-irwaz">
+              薪酬结构清晰，符合行业标准
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="iconify text-accent mt-1" data-icon="heroicons:check-circle" data-width="16"></span>
+            <p class="text-base-content/80 text-sm">
+              工作时间安排合理，加班费条款明确
+            </p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="iconify text-warning mt-1" data-icon="heroicons:exclamation-triangle" data-width="16"></span>
+            <p class="text-base-content/80 text-sm">试用期条款需要进一步确认</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="iconify text-warning mt-1" data-icon="heroicons:exclamation-triangle" data-width="16"></span>
+            <p class="text-base-content/80 text-sm">
+              竞业限制条款范围较广，建议协商
+            </p>
+          </div>
+        </div>
+      </section>
+      <!-- 潜在高风险条款 -->
+      <section class="legal-card p-6 border-l-4 border-error">
+        <h2 class="text-hierarchy-1 text-base-content mb-4 flex items-center gap-2">
+          <span class="iconify text-error" data-icon="heroicons:exclamation-circle" data-width="24"></span><span>潜在高风险条款</span>
+        </h2>
+        <div class="space-y-4">
+          <!-- 高风险条款1 -->
+          <div class="card bg-error/5 border border-error/20">
+            <div class="card-body p-4">
+              <div class="flex items-start justify-between mb-3">
+                <h3 class="text-hierarchy-2 text-base-content">
+                  第8条 竞业限制
+                </h3>
+                <div class="badge badge-error">高风险</div>
+              </div>
+              <div class="space-y-3">
+                <div>
+                  <h4 class="text-sm font-medium text-base-content mb-1">
+                    风险分析：
+                  </h4>
+                  <p class="text-base-content/80 text-sm leading-relaxed">
+                    竞业限制期限为2年，范围包括所有互联网相关行业，限制过于宽泛，可能影响您的职业发展。
+                  </p>
+                </div>
+                <div>
+                  <h4 class="text-sm font-medium text-base-content mb-1">
+                    法律依据：
+                  </h4>
+                  <p class="text-base-content/70 text-sm">
+                    《劳动合同法》第24条规定，竞业限制期限不得超过2年，且应支付经济补偿。
+                  </p>
+                </div>
+                <div>
+                  <h4 class="text-sm font-medium text-base-content mb-1">
+                    建议操作：
+                  </h4>
+                  <p class="text-base-content/80 text-sm">
+                    建议协商缩小竞业限制范围，明确经济补偿标准，或要求公司提供书面承诺。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 高风险条款2 -->
+          <div class="card bg-warning/5 border border-warning/20">
+            <div class="card-body p-4">
+              <div class="flex items-start justify-between mb-3">
+                <h3 class="text-hierarchy-2 text-base-content">
+                  第5条 试用期安排
+                </h3>
+                <div class="badge badge-warning">中风险</div>
+              </div>
+              <div class="space-y-3">
+                <div>
+                  <h4 class="text-sm font-medium text-base-content mb-1">
+                    风险分析：
+                  </h4>
+                  <p class="text-base-content/80 text-sm leading-relaxed">
+                    试用期为6个月，对于3年期合同来说时间较长，且试用期工资仅为正式工资的70%。
+                  </p>
+                </div>
+                <div>
+                  <h4 class="text-sm font-medium text-base-content mb-1">
+                    法律依据：
+                  </h4>
+                  <p class="text-base-content/70 text-sm">
+                    《劳动合同法》第19条规定，3年期合同试用期不得超过6个月，试用期工资不得低于正式工资的80%。
+                  </p>
+                </div>
+                <div>
+                  <h4 class="text-sm font-medium text-base-content mb-1">
+                    建议操作：
+                  </h4>
+                  <p class="text-base-content/80 text-sm">
+                    建议协商将试用期工资提高至正式工资的80%以上，或缩短试用期至3-4个月。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 操作建议 -->
+      <section class="legal-card p-6">
+        <h2 class="text-hierarchy-1 text-base-content mb-4 flex items-center gap-2">
+          <span class="iconify text-primary" data-icon="heroicons:light-bulb" data-width="24"></span><span>操作建议</span>
+        </h2>
+        <div class="space-y-3">
+          <button class="btn btn-outline w-full justify-start touch-feedback" onclick="navigateTo(&#39;contract_scan_compare_options&#39;)">
+            <span class="iconify" data-icon="heroicons:document-duplicate" data-width="20"></span><span>生成对比报告</span><span class="ml-auto text-xs text-base-content/60">推荐</span></button><button class="btn btn-ghost w-full justify-start touch-feedback">
+            <span class="iconify" data-icon="heroicons:phone" data-width="20"></span><span>咨询专业律师</span></button><button class="btn btn-ghost w-full justify-start touch-feedback">
+            <span class="iconify" data-icon="heroicons:document-text" data-width="20"></span><span>下载详细报告</span>
+          </button>
+        </div>
+      </section>
+      <!-- 底部操作栏 -->
+      <section class="sticky bottom-20 z-30">
+        <div id="ir9yfz" class="flex gap-3 ir9yfz spark-custom-ir9yfz">
+          <button id="id80qt" class="btn btn-outline flex-1 touch-feedback id80qt spark-custom-id80qt" onclick="navigateTo(&#39;contract_scan_upload&#39;)">
+            <span class="iconify i79248 spark-custom-i79248" data-icon="heroicons:arrow-left" data-width="20" id="i79248"></span><span id="ixtuia" class="ixtuia spark-custom-ixtuia">返回上传</span></button><button id="ibvlng" class="btn btn-primary flex-1 touch-feedback ibvlng spark-custom-ibvlng" onclick="navigateTo(&#39;contract_scan_compare_options&#39;)">
+            <span class="iconify" data-icon="heroicons:document-duplicate" data-width="20"></span><span id="inmekl" class="inmekl spark-custom-inmekl">生成对比</span></button><button id="ib45t5" class="btn btn-secondary flex-1 touch-feedback ib45t5 spark-custom-ib45t5" onclick="handleSaveReport()">
+            <span class="iconify" data-icon="heroicons:bookmark" data-width="20"></span><span id="ibe0wi" class="ibe0wi spark-custom-ibe0wi">保存报告</span>
+          </button>
+        </div>
+      </section>
+    </div>
+    <div data-section-id="common_dock_mobile" data-section-type="common_footer" class="fixed bottom-0 left-0 right-0 z-40 glass-effect soft-shadow mobile-safe-area">
+  <div class="flex items-center justify-around h-16 px-2">
+    <!-- 首页 --><button data-tab-id="home" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;home&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:home" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">首页</span></button><!-- 合同扫描 --><button data-tab-id="scan" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;scan&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:document-magnifying-glass" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">合同扫描</span></button><!-- 维权导航 --><button data-tab-id="rights" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;rights&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60 ivkvpd spark-custom-ivkvpd" data-icon="heroicons:scale" data-width="24" id="ivkvpd"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">维权导航</span></button><!-- 情景训练 --><button data-tab-id="training" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;training&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">情景训练</span></button><!-- 个人中心 --><button data-tab-id="profile" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;profile&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:user" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">个人</span>
+    </button>
+  </div>
+</div>
+<script>
+(function() {
+    // 全局应用状态管理
+    window.APP_GLOBALS = window.APP_GLOBALS || {};
+    
+    // 全局导航函数
+    window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        
+        if (isInIframe) {
+            window.parent.postMessage({
+                type: &#39;iframeNavigation&#39;,
+                targetPageId: targetPageId
+            }, &#39;*&#39;);
+        } else {
+            window.location.href = targetFileName;
+        }
+    };
+
+    // 返回导航函数
+    window.goBack = function() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，导航到首页
+            navigateTo(&#39;home_dashboard&#39;);
+        }
+    };
+
+    // 底部导航栏激活状态管理
+    window.setActiveDockTab = function(tabId) {
+        const allTabs = document.querySelectorAll(&#39;.dock-tab&#39;);
+        allTabs.forEach(tab => {
+            const isActive = tab.dataset.tabId === tabId;
+            tab.classList.toggle(&#39;active&#39;, isActive);
+            
+            const icon = tab.querySelector(&#39;.dock-icon&#39;);
+            const label = tab.querySelector(&#39;.dock-label&#39;);
+            
+            if (isActive) {
+                icon.classList.add(&#39;text-primary&#39;);
+                icon.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.add(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            } else {
+                icon.classList.remove(&#39;text-primary&#39;);
+                icon.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.remove(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            }
+        });
+    };
+
+    // 显示/隐藏加载状态
+    window.showLoading = function(message = &#39;处理中...&#39;) {
+        const loading = document.createElement(&#39;div&#39;);
+        loading.id = &#39;global-loading&#39;;
+        loading.className = &#39;fixed inset-0 z-50 flex items-center justify-center bg-base-100/80 backdrop-blur-sm&#39;;
+        loading.innerHTML = `
+            <div class="flex flex-col items-center gap-4">
+                <span class="loading loading-spinner text-primary loading-lg"></span>
+                <p class="text-base-content/70">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loading);
+    };
+
+    window.hideLoading = function() {
+        const loading = document.getElementById(&#39;global-loading&#39;);
+        if (loading) {
+            loading.remove();
+        }
+    };
+
+    // Toast 通知函数
+    window.showToast = function(message, type = &#39;info&#39;, duration = 3000) {
+        const toast = document.createElement(&#39;div&#39;);
+        toast.className = `alert alert-${type} fixed top-4 left-4 right-4 z-50 shadow-lg`;
+        
+        const iconMap = {
+            &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+            &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+            &#39;error&#39;: &#39;heroicons:x-circle&#39;,
+            &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;
+        };
+        
+        toast.innerHTML = `
+            <span class="iconify" data-icon="${iconMap[type]}" data-width="24"></span>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    };
+
+    // 页面加载完成后的初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 检测当前页面并设置对应的dock激活状态
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        
+        // 页面到底部导航标签的映射
+        const pageToTabMapping = {
+            &#39;home_dashboard&#39;: &#39;home&#39;,
+            &#39;contract_scan_upload&#39;: &#39;scan&#39;,
+            &#39;contract_scan_processing&#39;: &#39;scan&#39;,
+            &#39;contract_scan_results&#39;: &#39;scan&#39;,
+            &#39;contract_scan_history&#39;: &#39;scan&#39;,
+            &#39;rights_protection_entry&#39;: &#39;rights&#39;,
+            &#39;rights_protection_problem_description&#39;: &#39;rights&#39;,
+            &#39;rights_protection_progress_management&#39;: &#39;rights&#39;,
+            &#39;dialogue_simulation_mode_select&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_active&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_history&#39;: &#39;training&#39;,
+            &#39;legal_education_dashboard&#39;: &#39;education&#39;,
+            &#39;legal_education_content_explore&#39;: &#39;education&#39;,
+            &#39;legal_education_quiz_list&#39;: &#39;education&#39;,
+            &#39;profile_settings&#39;: &#39;profile&#39;,
+            &#39;profile_edit&#39;: &#39;profile&#39;,
+            &#39;account_security&#39;: &#39;profile&#39;
+        };
+        
+        const activeTab = pageToTabMapping[currentPage];
+        if (activeTab) {
+            setActiveDockTab(activeTab);
+        }
+    });
+
+    // 合同扫描相关函数
+    window.contractScanUtils = {
+        // 模拟文件上传
+        uploadFile: function(file, callback) {
+            showLoading(&#39;正在上传合同文件...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback(true);
+            }, 2000);
+        },
+        
+        // 模拟AI解析
+        analyzeContract: function(callback) {
+            showLoading(&#39;AI正在解析合同内容...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    riskLevel: &#39;medium&#39;,
+                    keyPoints: [&#39;试用期条款&#39;, &#39;薪酬结构&#39;, &#39;工作时间&#39;],
+                    suggestions: [&#39;建议澄清薪酬构成&#39;, &#39;确认加班费计算方式&#39;]
+                });
+            }, 3000);
+        }
+    };
+
+    // 维权导航相关函数
+    window.rightsProtectionUtils = {
+        // 生成维权方案
+        generateActionPlan: function(problemData, callback) {
+            showLoading(&#39;AI正在分析您的情况...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    actionType: &#39;劳动仲裁&#39;,
+                    steps: [&#39;收集证据&#39;, &#39;提交申请&#39;, &#39;参加仲裁&#39;],
+                    timeline: &#39;预计2-3个月&#39;
+                });
+            }, 2500);
+        }
+    };
+
+})();
+</script><script>
+// 初始化页面
+document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+    // 更新头部标题
+    updateMobileHeader({
+        title: &#39;合同解析结果&#39;,
+        showBack: true,
+        showAction: false,
+        onBack: function() {
+            navigateTo(&#39;contract_scan_upload&#39;);
+        }
+    });
+
+    // 确保底部导航显示
+    const showDock = shouldShowDock(&#39;contract_scan_results&#39;);
+    toggleDock(showDock);
+
+    // 设置激活的导航标签
+    setActiveDockTab(&#39;scan&#39;);
+
+    // 初始化页面动画
+    initPageAnimations();
+
+    // 初始化条款展开/收缩功能
+    initClauseInteractions();
+});
+
+// 初始化页面动画
+function initPageAnimations() {
+    const sections = document.querySelectorAll(&#39;section&#39;);
+    sections.forEach((section, index) => {
+        section.style.animationDelay = `${index * 0.1}s`;
+        section.classList.add(&#39;animate-slide-in&#39;);
+    });
+}
+
+// 初始化条款交互功能
+function initClauseInteractions() {
+    const collapseElements = document.querySelectorAll(&#39;.collapse&#39;);
+    
+    collapseElements.forEach(collapse => {
+        const input = collapse.querySelector(&#39;input[type="radio"]&#39;);
+        const title = collapse.querySelector(&#39;.collapse-title&#39;);
+        
+        if (title &amp;&amp; input) {
+            title.addEventListener(&#39;click&#39;, function() {
+                // 添加触觉反馈
+                if (navigator.vibrate) {
+                    navigator.vibrate(10);
+                }
+                
+                // 添加视觉反馈
+                title.style.transform = &#39;scale(0.98)&#39;;
+                setTimeout(() => {
+                    title.style.transform = &#39;scale(1)&#39;;
+                }, 100);
+            });
+        }
+    });
+}
+
+// 保存报告功能
+function handleSaveReport() {
+    // 显示加载状态
+    showLoading(&#39;正在保存报告...&#39;);
+    
+    // 添加触觉反馈
+    if (navigator.vibrate) {
+        navigator.vibrate([50, 30, 50]);
+    }
+    
+    // 模拟保存过程
+    setTimeout(() => {
+        hideLoading();
+        showToast(&#39;报告已保存到历史记录&#39;, &#39;success&#39;);
+        
+        // 延迟导航到历史页面
+        setTimeout(() => {
+            navigateTo(&#39;contract_scan_history&#39;);
+        }, 1000);
+    }, 1500);
+}
+
+// 生成对比报告功能
+function handleCompareReport() {
+    // 添加触觉反馈
+    if (navigator.vibrate) {
+        navigator.vibrate(20);
+    }
+    
+    showToast(&#39;正在准备对比选项...&#39;, &#39;info&#39;);
+    
+    setTimeout(() => {
+        navigateTo(&#39;contract_scan_compare_options&#39;);
+    }, 800);
+}
+
+// 风险条款高亮功能
+function highlightRiskClause(clauseId) {
+    const clause = document.getElementById(clauseId);
+    if (clause) {
+        clause.classList.add(&#39;pulse-indicator&#39;);
+        clause.scrollIntoView({ behavior: &#39;smooth&#39;, block: &#39;center&#39; });
+        
+        setTimeout(() => {
+            clause.classList.remove(&#39;pulse-indicator&#39;);
+        }, 3000);
+    }
+}
+
+// 展开所有高风险条款
+function expandAllRiskClauses() {
+    const riskClauses = document.querySelectorAll(&#39;.card.bg-error\\/5 input[type="radio"], .card.bg-warning\\/5 input[type="radio"]&#39;);
+    riskClauses.forEach(input => {
+        input.checked = true;
+    });
+    
+    showToast(&#39;已展开所有风险条款&#39;, &#39;info&#39;);
+}
+
+// 下载报告功能
+function downloadReport() {
+    showLoading(&#39;正在生成PDF报告...&#39;);
+    
+    // 模拟PDF生成
+    setTimeout(() => {
+        hideLoading();
+        showToast(&#39;报告下载已开始&#39;, &#39;success&#39;);
+        
+        // 这里可以触发实际的文件下载
+        // const link = document.createElement(&#39;a&#39;);
+        // link.href = &#39;path/to/generated/report.pdf&#39;;
+        // link.download = &#39;合同解析报告.pdf&#39;;
+        // link.click();
+    }, 2000);
+}
+
+// 咨询律师功能
+function consultLawyer() {
+    showToast(&#39;正在连接专业律师...&#39;, &#39;info&#39;);
+    
+    // 模拟连接过程
+    setTimeout(() => {
+        // 这里可以打开聊天界面或拨打电话
+        showToast(&#39;律师咨询功能即将上线&#39;, &#39;warning&#39;);
+    }, 1000);
+}
+
+// 分享报告功能
+function shareReport() {
+    if (navigator.share) {
+        navigator.share({
+            title: &#39;合同解析报告&#39;,
+            text: &#39;我刚刚完成了一份合同解析，发现了一些需要注意的条款。&#39;,
+            url: window.location.href
+        }).then(() => {
+            showToast(&#39;分享成功&#39;, &#39;success&#39;);
+        }).catch(() => {
+            showToast(&#39;分享取消&#39;, &#39;info&#39;);
+        });
+    } else {
+        // 降级到复制链接
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            showToast(&#39;链接已复制到剪贴板&#39;, &#39;success&#39;);
+        }).catch(() => {
+            showToast(&#39;分享功能暂不可用&#39;, &#39;error&#39;);
+        });
+    }
+}
+
+// 页面滚动优化
+let ticking = false;
+
+function updateScrollPosition() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const bottomActions = document.querySelector(&#39;.bottom-actions&#39;);
+    
+    if (bottomActions) {
+        if (scrollTop > 100) {
+            bottomActions.style.boxShadow = &#39;0 -4px 12px rgba(0, 0, 0, 0.1)&#39;;
+        } else {
+            bottomActions.style.boxShadow = &#39;0 -1px 3px rgba(0, 0, 0, 0.05)&#39;;
+        }
+    }
+    
+    ticking = false;
+}
+
+window.addEventListener(&#39;scroll&#39;, function() {
+    if (!ticking) {
+        requestAnimationFrame(updateScrollPosition);
+        ticking = true;
+    }
+});
+
+// 键盘快捷键支持
+document.addEventListener(&#39;keydown&#39;, function(e) {
+    // Ctrl/Cmd + S 保存报告
+    if ((e.ctrlKey || e.metaKey) &amp;&amp; e.key === &#39;s&#39;) {
+        e.preventDefault();
+        handleSaveReport();
+    }
+    
+    // Ctrl/Cmd + D 下载报告
+    if ((e.ctrlKey || e.metaKey) &amp;&amp; e.key === &#39;d&#39;) {
+        e.preventDefault();
+        downloadReport();
+    }
+    
+    // ESC 返回上一页
+    if (e.key === &#39;Escape&#39;) {
+        navigateTo(&#39;contract_scan_upload&#39;);
+    }
+});
+
+// 页面可见性变化处理
+document.addEventListener(&#39;visibilitychange&#39;, function() {
+    if (document.visibilityState === &#39;visible&#39;) {
+        // 页面重新可见时，刷新数据（如果需要）
+        console.log(&#39;页面重新可见，可以在这里刷新数据&#39;);
+    }
+});
+</script>
+  
+
+<script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+  </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

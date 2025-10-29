@@ -1,0 +1,1074 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>普法内容探索</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 402
+                const height = 874
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'splash_screen': '启动页',
+    'onboarding_intro': '引导页1 - 欢迎',
+    'onboarding_feature_overview': '引导页2 - 功能概览',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
+    'contract_scan_upload': '合同扫描上传',
+    'contract_scan_processing': '合同解析中',
+    'contract_scan_results': '合同解析结果',
+    'contract_scan_compare_options': '合同对比选项',
+    'contract_scan_comparison_report': '合同对比报告',
+    'rights_protection_entry': '维权导航入口',
+    'rights_protection_problem_description': '问题描述',
+    'rights_protection_guided_inquiry': 'AI引导问询',
+    'rights_protection_analysis_results': '维权初步分析',
+    'rights_protection_action_plan': '维权行动方案',
+    'rights_protection_progress_management': '维权进度管理',
+    'rights_protection_evidence_guide': '证据清单与取证指引',
+    'rights_protection_agency_info': '机构指引与管辖规则',
+    'rights_protection_document_templates': '法律文书辅助',
+    'dialogue_simulation_mode_select': '情景模拟模式选择',
+    'dialogue_simulation_scenario_list': '预设情景库',
+    'dialogue_simulation_custom_setup': '自定义情景设置',
+    'dialogue_simulation_active': '情景对话中',
+    'dialogue_simulation_feedback_report': '模拟反馈报告',
+    'legal_education_dashboard': '普法与评估中心',
+    'legal_education_content_explore': '普法内容探索',
+    'legal_education_quiz_list': '法律测评题库',
+    'legal_education_quiz_session': '法律测评进行中',
+    'legal_education_quiz_results': '法律测评结果',
+    'legal_education_personalized_recommendations': '个性化推荐学习'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="zh" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>普法内容探索 - 职场法律助手</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+/* 职场法律助手 - 移动端样式配置 */
+:root {
+    /* 基于light主题的品牌色彩定制 */
+    --color-primary: rgba(59, 130, 246, 1); /* 专业蓝色 */
+    --color-primary-content: rgba(255, 255, 255, 1);
+    --color-secondary: rgba(107, 114, 128, 1); /* 中性灰 */
+    --color-secondary-content: rgba(255, 255, 255, 1);
+    --color-accent: rgba(16, 185, 129, 1); /* 成功绿 */
+    --color-accent-content: rgba(255, 255, 255, 1);
+    
+    /* 圆角设置 - 现代专业感 */
+    --radius-box: 0.75rem;
+    --radius-field: 0.5rem;
+    --radius-selector: 0.375rem;
+    
+    /* 边框设置 */
+    --border: 1px;
+}
+
+/* 移动端安全区域适配 */
+.mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 毛玻璃效果 - 用于导航栏 */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Apple风格阴影 */
+.soft-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 触摸反馈优化 */
+.touch-feedback {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 卡片样式 */
+.legal-card {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: var(--border) solid var(--color-base-200);
+}
+
+/* 文本层级 */
+.text-hierarchy-1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-hierarchy-2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.text-hierarchy-3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 状态颜色 */
+.status-success {
+    color: var(--color-success);
+}
+
+.status-warning {
+    color: var(--color-warning);
+}
+
+.status-error {
+    color: var(--color-error);
+}
+
+/* 页面主体容器 */
+body {
+    padding-bottom: 4rem; /* 为底部导航预留空间 */
+}
+</style> <style>
+/* 普法内容探索页面样式 */
+
+/* 文本截断样式 */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 筛选标签动画 */
+.badge.touch-feedback:active {
+    transform: scale(0.95);
+}
+
+/* 卡片悬停效果 */
+.card.touch-feedback:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+/* 搜索框焦点效果 */
+.input:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    border-color: var(--color-primary);
+}
+
+/* 热门标签滚动条隐藏 */
+.overflow-x-auto::-webkit-scrollbar {
+    display: none;
+}
+
+.overflow-x-auto {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* 内容卡片间距优化 */
+.space-y-3 > * + * {
+    margin-top: 0.75rem;
+}
+
+/* 加载指示器动画 */
+#load-more-indicator {
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+/* 筛选区域背景渐变 */
+.bg-base-200\/50 {
+    background: linear-gradient(to bottom, var(--color-base-200), rgba(var(--color-base-200), 0.3));
+}
+
+/* 精选内容卡片特殊样式 */
+.card.shadow-sm {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式优化 */
+@media (max-width: 402px) {
+    .card-body {
+        padding: 0.75rem !important;
+    }
+    
+    .text-lg {
+        font-size: 1rem;
+    }
+    
+    .badge-lg {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* 触摸反馈增强 */
+.touch-feedback {
+    transition: all 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 热门标签激活状态 */
+.badge-primary {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+    border-color: var(--color-primary);
+}
+
+.badge-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+    border-color: var(--color-primary);
+}
+
+/* 图片占位符样式 */
+.bg-base-200 img {
+    transition: opacity 0.3s ease;
+}
+
+.bg-base-200 img:hover {
+    opacity: 0.9;
+}
+</style>
+  <script src="./assets/static/uxbot/25_6/holder.js"></script><style>
+.ik0mg.spark-custom-ik0mg#ik0mg {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 46px;
+  margin-top: 0px;
+}
+
+</style></head>
+  <body class="bg-base-100 min-h-screen flex flex-col">
+    <div data-section-id="common_header_mobile" data-section-type="common_header" class="sticky top-0 z-50 glass-effect soft-shadow">
+  <div class="flex items-center justify-between h-14 px-4">
+    <!-- 左侧：返回按钮 --><button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback" onclick="handleBackAction()">
+      <span class="iconify text-base-content" data-icon="heroicons:arrow-left" data-width="24"></span></button><!-- 中间：页面标题 -->
+    <h1 id="ik0mg" class="text-lg font-medium text-base-content truncate px-4 header-title flex-1 text-center ik0mg spark-custom-ik0mg ik0mg">
+      普法内容探索
+    </h1>
+    <!-- 右侧：操作按钮 -->
+    <div class="flex items-center gap-1">
+      <button id="i1zwv" class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback header-action-btn" style="display: none;" onclick="handleHeaderAction()">
+        <span class="iconify text-base-content header-action-icon" data-icon="heroicons:ellipsis-horizontal" data-width="24"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<style>
+.ik0mg.spark-custom-ik0mg#ik0mg {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 46px;
+  margin-top: 0px;
+}
+
+</style><!-- 主要内容区域 -->
+    <div class="flex-1 flex flex-col">
+      <!-- 筛选区域 -->
+      <div class="bg-base-200/50 px-4 py-4 ir99n spark-custom-ir99n" id="ir99n">
+        <!-- 搜索框和筛选按钮 -->
+        <div class="join w-full mb-4">
+          <input type="text" placeholder="搜索法律条文或案例" id="search-input" class="input input-bordered join-item flex-1"><button class="btn btn-ghost join-item px-3 touch-feedback" onclick="showFilterModal()">
+            <span class="iconify text-base-content" data-icon="heroicons:funnel" data-width="20"></span>
+          </button>
+        </div>
+        <!-- 热门领域推荐 -->
+        <div class="mb-2">
+          <h3 class="text-sm font-medium text-base-content/70 mb-3">
+            热门领域推荐
+          </h3>
+          <div class="flex gap-2 overflow-x-auto pb-2">
+            <button class="badge badge-primary badge-lg whitespace-nowrap touch-feedback" onclick="filterByTopic(&#39;劳动合同&#39;)">
+              劳动合同</button><button class="badge badge-outline badge-lg whitespace-nowrap touch-feedback" onclick="filterByTopic(&#39;工伤赔偿&#39;)">
+              工伤赔偿</button><button class="badge badge-outline badge-lg whitespace-nowrap touch-feedback" onclick="filterByTopic(&#39;知识产权&#39;)">
+              知识产权</button><button class="badge badge-outline badge-lg whitespace-nowrap touch-feedback" onclick="filterByTopic(&#39;合同纠纷&#39;)">
+              合同纠纷</button><button class="badge badge-outline badge-lg whitespace-nowrap touch-feedback" onclick="filterByTopic(&#39;劳动仲裁&#39;)">
+              劳动仲裁
+            </button>
+          </div>
+        </div>
+        <!-- 清除筛选按钮 -->
+        <div class="flex justify-end">
+          <button class="btn btn-ghost btn-xs text-base-content/60 touch-feedback" onclick="clearFilters()">
+            <span class="iconify" data-icon="heroicons:x-mark" data-width="16"></span>
+            清除筛选
+          </button>
+        </div>
+      </div>
+      <!-- 今日精选区域 -->
+      <div class="px-4 py-4 bg-base-100">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <div class="badge badge-error badge-sm">HOT</div>
+            <h2 class="text-lg font-semibold text-base-content">今日精选</h2>
+          </div>
+          <button class="btn btn-ghost btn-sm text-primary touch-feedback" onclick="viewMoreFeatured()">
+            查看更多
+          </button>
+        </div>
+        <!-- 精选内容卡片 -->
+        <div data-repeatable="true" class="card bg-base-100 shadow-sm border border-base-200 touch-feedback" onclick="navigateTo(&#39;legal_education_content_detail&#39;)">
+          <div class="card-body p-4">
+            <div class="flex gap-3">
+              <div class="flex-1">
+                <h3 class="card-title text-base font-medium text-base-content mb-2">
+                  劳动法必知：试用期陷阱与防范
+                </h3>
+                <p class="text-sm text-base-content/70 mb-3">
+                  深入解析试用期的法律风险点及应对策略
+                </p>
+                <div class="flex items-center gap-4 text-xs text-base-content/60">
+                  <span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:user" data-width="14"></span>
+                    张律师 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:clock" data-width="14"></span>
+                    2小时前
+                  </span>
+                </div>
+              </div>
+              <div class="w-20 h-16 rounded-lg overflow-hidden bg-base-200 flex-shrink-0">
+                <img src="https://images.unsplash.com/photo-1759405185489-54b6ed6c717e?crop=entropy&amp;amp;cs=tinysrgb&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxsYWJvciUyMGxhdyUyMGJvb2t8ZW58MHx8fHwxNzYxNjUyNzA2fDA&amp;amp;ixlib=rb-4.1.0&amp;amp;q=80&amp;amp;w=80&amp;amp;h=64" alt="劳动法图片" class="w-full h-full object-cover">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 全部内容列表 -->
+      <div class="flex-1 px-4 py-4 bg-base-100">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold text-base-content">全部内容</h2>
+          <button class="btn btn-ghost btn-sm touch-feedback" onclick="showSortModal()">
+            <span class="iconify text-base-content/70" data-icon="heroicons:bars-3-bottom-left" data-width="18"></span>
+            排序
+          </button>
+        </div>
+        <!-- 内容列表 -->
+        <div id="content-list" class="space-y-3">
+          <!-- 内容项 1 -->
+          <div data-repeatable="true" class="card bg-base-100 shadow-sm border border-base-200 touch-feedback" onclick="navigateTo(&#39;legal_education_content_detail&#39;)">
+            <div class="card-body p-4">
+              <div class="flex gap-3">
+                <div class="w-16 h-12 rounded-lg overflow-hidden bg-base-200 flex-shrink-0">
+                  <img src="https://images.unsplash.com/photo-1622997151872-6efdfe3dee24?crop=entropy&amp;amp;cs=tinysrgb&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxjaXZpbCUyMGNvZGUlMjBib29rfGVufDB8fHx8MTc2MTY1MjcwM3ww&amp;amp;ixlib=rb-4.1.0&amp;amp;q=80&amp;amp;w=64&amp;amp;h=48" alt="民法典图片" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-medium text-base text-base-content mb-1 line-clamp-2">
+                    民法典速读：婚姻家庭篇
+                  </h3>
+                  <p class="text-sm text-base-content/70 mb-2 line-clamp-2">
+                    专家详解新婚姻法条款，保障您的家庭权益
+                  </p>
+                  <div class="flex items-center gap-4 text-xs text-base-content/60">
+                    <span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:user" data-width="12"></span>
+                      李法务 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:clock" data-width="12"></span>
+                      3天前 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:eye" data-width="12"></span>
+                      3.5万阅读
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 内容项 2 -->
+          <div data-repeatable="true" class="card bg-base-100 shadow-sm border border-base-200 touch-feedback" onclick="navigateTo(&#39;legal_education_content_detail&#39;)">
+            <div class="card-body p-4">
+              <div class="flex gap-3">
+                <div class="w-16 h-12 rounded-lg overflow-hidden bg-base-200 flex-shrink-0">
+                  <img src="https://images.unsplash.com/photo-1653029920618-79669681e35e?crop=entropy&amp;amp;cs=tinysrgb&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxjb250cmFjdCUyMGxhdyUyMGJvb2t8ZW58MHx8fHwxNzYxNjUyNzA0fDA&amp;amp;ixlib=rb-4.1.0&amp;amp;q=80&amp;amp;w=64&amp;amp;h=48" alt="合同法图片" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-medium text-base text-base-content mb-1 line-clamp-2">
+                    合同法实务：违约责任与救济
+                  </h3>
+                  <p class="text-sm text-base-content/70 mb-2 line-clamp-2">
+                    深度解析合同违约的法律后果及维权途径
+                  </p>
+                  <div class="flex items-center gap-4 text-xs text-base-content/60">
+                    <span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:user" data-width="12"></span>
+                      王律师 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:clock" data-width="12"></span>
+                      1周前 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:eye" data-width="12"></span>
+                      2.1万阅读
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 内容项 3 -->
+          <div data-repeatable="true" class="card bg-base-100 shadow-sm border border-base-200 touch-feedback" onclick="navigateTo(&#39;legal_education_content_detail&#39;)">
+            <div class="card-body p-4">
+              <div class="flex gap-3">
+                <div class="w-16 h-12 rounded-lg overflow-hidden bg-base-200 flex-shrink-0">
+                  <img src="https://images.unsplash.com/photo-1724947583702-99228e11b5bd?crop=entropy&amp;amp;cs=tinysrgb&amp;amp;fit=crop&amp;amp;fm=jpg&amp;amp;ixid=M3w3MjkzNDZ8MHwxfHNlYXJjaHwyfHxpbnRlbGxlY3R1YWwlMjBwcm9wZXJ0eSUyMGRvY3VtZW50c3xlbnwwfHx8fDE3NjE2NTI3MDh8MA&amp;amp;ixlib=rb-4.1.0&amp;amp;q=80&amp;amp;w=64&amp;amp;h=48" alt="知识产权图片" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h3 class="font-medium text-base text-base-content mb-1 line-clamp-2">
+                    知识产权保护指南
+                  </h3>
+                  <p class="text-sm text-base-content/70 mb-2 line-clamp-2">
+                    商标、专利、著作权全方位保护策略
+                  </p>
+                  <div class="flex items-center gap-4 text-xs text-base-content/60">
+                    <span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:user" data-width="12"></span>
+                      陈专家 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:clock" data-width="12"></span>
+                      2周前 </span><span class="flex items-center gap-1"><span class="iconify" data-icon="heroicons:eye" data-width="12"></span>
+                      1.8万阅读
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 加载更多指示器 -->
+          <div id="load-more-indicator" class="flex justify-center py-4">
+            <span class="loading loading-spinner text-primary"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-section-id="common_dock_mobile" data-section-type="common_footer" class="fixed bottom-0 left-0 right-0 z-40 glass-effect soft-shadow mobile-safe-area">
+  <div class="flex items-center justify-around h-16 px-2">
+    <!-- 首页 --><button data-tab-id="home" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;home&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:home" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">首页</span></button><!-- 合同扫描 --><button data-tab-id="scan" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;scan&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:document-magnifying-glass" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">合同扫描</span></button><!-- 维权导航 --><button data-tab-id="rights" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;rights&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:scale" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">维权导航</span></button><!-- 情景训练 --><button data-tab-id="training" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;training&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">情景训练</span></button><!-- 个人中心 --><button data-tab-id="profile" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;profile&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:user" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">个人</span>
+    </button>
+  </div>
+</div>
+<script>
+(function() {
+    // 全局应用状态管理
+    window.APP_GLOBALS = window.APP_GLOBALS || {};
+    
+    // 全局导航函数
+    window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        
+        if (isInIframe) {
+            window.parent.postMessage({
+                type: &#39;iframeNavigation&#39;,
+                targetPageId: targetPageId
+            }, &#39;*&#39;);
+        } else {
+            window.location.href = targetFileName;
+        }
+    };
+
+    // 返回导航函数
+    window.goBack = function() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，导航到首页
+            navigateTo(&#39;home_dashboard&#39;);
+        }
+    };
+
+    // 底部导航栏激活状态管理
+    window.setActiveDockTab = function(tabId) {
+        const allTabs = document.querySelectorAll(&#39;.dock-tab&#39;);
+        allTabs.forEach(tab => {
+            const isActive = tab.dataset.tabId === tabId;
+            tab.classList.toggle(&#39;active&#39;, isActive);
+            
+            const icon = tab.querySelector(&#39;.dock-icon&#39;);
+            const label = tab.querySelector(&#39;.dock-label&#39;);
+            
+            if (isActive) {
+                icon.classList.add(&#39;text-primary&#39;);
+                icon.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.add(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            } else {
+                icon.classList.remove(&#39;text-primary&#39;);
+                icon.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.remove(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            }
+        });
+    };
+
+    // 显示/隐藏加载状态
+    window.showLoading = function(message = &#39;处理中...&#39;) {
+        const loading = document.createElement(&#39;div&#39;);
+        loading.id = &#39;global-loading&#39;;
+        loading.className = &#39;fixed inset-0 z-50 flex items-center justify-center bg-base-100/80 backdrop-blur-sm&#39;;
+        loading.innerHTML = `
+            <div class="flex flex-col items-center gap-4">
+                <span class="loading loading-spinner text-primary loading-lg"></span>
+                <p class="text-base-content/70">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loading);
+    };
+
+    window.hideLoading = function() {
+        const loading = document.getElementById(&#39;global-loading&#39;);
+        if (loading) {
+            loading.remove();
+        }
+    };
+
+    // Toast 通知函数
+    window.showToast = function(message, type = &#39;info&#39;, duration = 3000) {
+        const toast = document.createElement(&#39;div&#39;);
+        toast.className = `alert alert-${type} fixed top-4 left-4 right-4 z-50 shadow-lg`;
+        
+        const iconMap = {
+            &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+            &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+            &#39;error&#39;: &#39;heroicons:x-circle&#39;,
+            &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;
+        };
+        
+        toast.innerHTML = `
+            <span class="iconify" data-icon="${iconMap[type]}" data-width="24"></span>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    };
+
+    // 页面加载完成后的初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 检测当前页面并设置对应的dock激活状态
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        
+        // 页面到底部导航标签的映射
+        const pageToTabMapping = {
+            &#39;home_dashboard&#39;: &#39;home&#39;,
+            &#39;contract_scan_upload&#39;: &#39;scan&#39;,
+            &#39;contract_scan_processing&#39;: &#39;scan&#39;,
+            &#39;contract_scan_results&#39;: &#39;scan&#39;,
+            &#39;contract_scan_history&#39;: &#39;scan&#39;,
+            &#39;rights_protection_entry&#39;: &#39;rights&#39;,
+            &#39;rights_protection_problem_description&#39;: &#39;rights&#39;,
+            &#39;rights_protection_progress_management&#39;: &#39;rights&#39;,
+            &#39;dialogue_simulation_mode_select&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_active&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_history&#39;: &#39;training&#39;,
+            &#39;legal_education_dashboard&#39;: &#39;education&#39;,
+            &#39;legal_education_content_explore&#39;: &#39;education&#39;,
+            &#39;legal_education_quiz_list&#39;: &#39;education&#39;,
+            &#39;profile_settings&#39;: &#39;profile&#39;,
+            &#39;profile_edit&#39;: &#39;profile&#39;,
+            &#39;account_security&#39;: &#39;profile&#39;
+        };
+        
+        const activeTab = pageToTabMapping[currentPage];
+        if (activeTab) {
+            setActiveDockTab(activeTab);
+        }
+    });
+
+    // 合同扫描相关函数
+    window.contractScanUtils = {
+        // 模拟文件上传
+        uploadFile: function(file, callback) {
+            showLoading(&#39;正在上传合同文件...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback(true);
+            }, 2000);
+        },
+        
+        // 模拟AI解析
+        analyzeContract: function(callback) {
+            showLoading(&#39;AI正在解析合同内容...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    riskLevel: &#39;medium&#39;,
+                    keyPoints: [&#39;试用期条款&#39;, &#39;薪酬结构&#39;, &#39;工作时间&#39;],
+                    suggestions: [&#39;建议澄清薪酬构成&#39;, &#39;确认加班费计算方式&#39;]
+                });
+            }, 3000);
+        }
+    };
+
+    // 维权导航相关函数
+    window.rightsProtectionUtils = {
+        // 生成维权方案
+        generateActionPlan: function(problemData, callback) {
+            showLoading(&#39;AI正在分析您的情况...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    actionType: &#39;劳动仲裁&#39;,
+                    steps: [&#39;收集证据&#39;, &#39;提交申请&#39;, &#39;参加仲裁&#39;],
+                    timeline: &#39;预计2-3个月&#39;
+                });
+            }, 2500);
+        }
+    };
+
+})();
+</script><script>
+// 页面初始化
+document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+    // 更新头部标题
+    updateMobileHeader({
+        title: &#39;普法内容探索&#39;,
+        showBack: true,
+        showAction: false,
+        onBack: function() {
+            navigateTo(&#39;legal_education_dashboard&#39;);
+        }
+    });
+
+    // 激活教育标签并显示底部导航
+    setActiveDockTab(&#39;education&#39;);
+    toggleDock(true);
+
+    // 初始化无限滚动
+    initInfiniteScroll();
+});
+
+// 全局变量
+let currentFilters = {
+    topic: &#39;&#39;,
+    search: &#39;&#39;,
+    sort: &#39;latest&#39;
+};
+
+let isLoading = false;
+let hasMoreContent = true;
+
+// 按话题筛选
+function filterByTopic(topic) {
+    // 更新筛选状态
+    currentFilters.topic = topic;
+    
+    // 更新标签样式
+    const badges = document.querySelectorAll(&#39;.badge&#39;);
+    badges.forEach(badge => {
+        if (badge.textContent === topic) {
+            badge.className = &#39;badge badge-primary badge-lg whitespace-nowrap touch-feedback&#39;;
+        } else {
+            badge.className = &#39;badge badge-outline badge-lg whitespace-nowrap touch-feedback&#39;;
+        }
+    });
+
+    // 重新加载内容
+    reloadContent();
+    
+    showToast(`已筛选：${topic}`, &#39;info&#39;);
+}
+
+// 清除筛选
+function clearFilters() {
+    currentFilters = {
+        topic: &#39;&#39;,
+        search: &#39;&#39;,
+        sort: &#39;latest&#39;
+    };
+
+    // 重置标签样式
+    const badges = document.querySelectorAll(&#39;.badge&#39;);
+    badges.forEach((badge, index) => {
+        if (index === 0) {
+            badge.className = &#39;badge badge-primary badge-lg whitespace-nowrap touch-feedback&#39;;
+        } else {
+            badge.className = &#39;badge badge-outline badge-lg whitespace-nowrap touch-feedback&#39;;
+        }
+    });
+
+    // 清空搜索框
+    document.getElementById(&#39;search-input&#39;).value = &#39;&#39;;
+
+    // 重新加载内容
+    reloadContent();
+    
+    showToast(&#39;已清除所有筛选条件&#39;, &#39;info&#39;);
+}
+
+// 显示筛选模态框
+function showFilterModal() {
+    // 创建筛选模态框
+    const modal = document.createElement(&#39;div&#39;);
+    modal.className = &#39;modal modal-open&#39;;
+    modal.innerHTML = `
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">筛选条件</h3>
+            
+            <div class="form-control mb-4">
+                <label class="label">
+                    <span class="label-text">法律领域</span>
+                </label>
+                <select class="select select-bordered" id="filter-topic">
+                    <option value="">全部领域</option>
+                    <option value="劳动合同">劳动合同</option>
+                    <option value="工伤赔偿">工伤赔偿</option>
+                    <option value="知识产权">知识产权</option>
+                    <option value="合同纠纷">合同纠纷</option>
+                    <option value="劳动仲裁">劳动仲裁</option>
+                </select>
+            </div>
+
+            <div class="form-control mb-4">
+                <label class="label">
+                    <span class="label-text">适用场景</span>
+                </label>
+                <select class="select select-bordered" id="filter-scenario">
+                    <option value="">全部场景</option>
+                    <option value="入职离职">入职离职</option>
+                    <option value="薪酬福利">薪酬福利</option>
+                    <option value="工作纠纷">工作纠纷</option>
+                    <option value="合同签署">合同签署</option>
+                </select>
+            </div>
+
+            <div class="modal-action">
+                <button class="btn btn-ghost" onclick="closeFilterModal()">取消</button>
+                <button class="btn btn-primary" onclick="applyFilters()">应用筛选</button>
+            </div>
+        </div>
+        <div class="modal-backdrop" onclick="closeFilterModal()"></div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // 设置当前筛选值
+    document.getElementById(&#39;filter-topic&#39;).value = currentFilters.topic;
+}
+
+// 关闭筛选模态框
+function closeFilterModal() {
+    const modal = document.querySelector(&#39;.modal&#39;);
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// 应用筛选
+function applyFilters() {
+    const topic = document.getElementById(&#39;filter-topic&#39;).value;
+    const scenario = document.getElementById(&#39;filter-scenario&#39;).value;
+    
+    currentFilters.topic = topic;
+    currentFilters.scenario = scenario;
+    
+    closeFilterModal();
+    reloadContent();
+    
+    showToast(&#39;筛选条件已应用&#39;, &#39;success&#39;);
+}
+
+// 显示排序模态框
+function showSortModal() {
+    const modal = document.createElement(&#39;div&#39;);
+    modal.className = &#39;modal modal-open&#39;;
+    modal.innerHTML = `
+        <div class="modal-box">
+            <h3 class="font-bold text-lg mb-4">排序方式</h3>
+            
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                    <span class="label-text">最新发布</span>
+                    <input type="radio" name="sort" value="latest" class="radio radio-primary" ${currentFilters.sort === &#39;latest&#39; ? &#39;checked&#39; : &#39;&#39;} />
+                </label>
+                <label class="label cursor-pointer">
+                    <span class="label-text">最多阅读</span>
+                    <input type="radio" name="sort" value="popular" class="radio radio-primary" ${currentFilters.sort === &#39;popular&#39; ? &#39;checked&#39; : &#39;&#39;} />
+                </label>
+                <label class="label cursor-pointer">
+                    <span class="label-text">最高评分</span>
+                    <input type="radio" name="sort" value="rating" class="radio radio-primary" ${currentFilters.sort === &#39;rating&#39; ? &#39;checked&#39; : &#39;&#39;} />
+                </label>
+            </div>
+
+            <div class="modal-action">
+                <button class="btn btn-ghost" onclick="closeSortModal()">取消</button>
+                <button class="btn btn-primary" onclick="applySort()">确定</button>
+            </div>
+        </div>
+        <div class="modal-backdrop" onclick="closeSortModal()"></div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+// 关闭排序模态框
+function closeSortModal() {
+    const modal = document.querySelector(&#39;.modal&#39;);
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// 应用排序
+function applySort() {
+    const selectedSort = document.querySelector(&#39;input[name="sort"]:checked&#39;).value;
+    currentFilters.sort = selectedSort;
+    
+    closeSortModal();
+    reloadContent();
+    
+    const sortNames = {
+        &#39;latest&#39;: &#39;最新发布&#39;,
+        &#39;popular&#39;: &#39;最多阅读&#39;,
+        &#39;rating&#39;: &#39;最高评分&#39;
+    };
+    
+    showToast(`已按${sortNames[selectedSort]}排序`, &#39;success&#39;);
+}
+
+// 查看更多精选内容
+function viewMoreFeatured() {
+    // 模拟跳转到精选内容页面
+    showToast(&#39;正在加载更多精选内容...&#39;, &#39;info&#39;);
+}
+
+// 重新加载内容
+function reloadContent() {
+    const contentList = document.getElementById(&#39;content-list&#39;);
+    const loadMoreIndicator = document.getElementById(&#39;load-more-indicator&#39;);
+    
+    // 显示加载状态
+    loadMoreIndicator.style.display = &#39;flex&#39;;
+    
+    // 模拟API请求
+    setTimeout(() => {
+        // 这里应该根据筛选条件重新获取内容
+        loadMoreIndicator.style.display = &#39;none&#39;;
+        hasMoreContent = true;
+    }, 1000);
+}
+
+// 初始化无限滚动
+function initInfiniteScroll() {
+    const loadMoreIndicator = document.getElementById(&#39;load-more-indicator&#39;);
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting &amp;&amp; hasMoreContent &amp;&amp; !isLoading) {
+                loadMoreContent();
+            }
+        });
+    }, {
+        rootMargin: &#39;100px&#39;
+    });
+    
+    observer.observe(loadMoreIndicator);
+}
+
+// 加载更多内容
+function loadMoreContent() {
+    if (isLoading || !hasMoreContent) return;
+    
+    isLoading = true;
+    const loadMoreIndicator = document.getElementById(&#39;load-more-indicator&#39;);
+    loadMoreIndicator.style.display = &#39;flex&#39;;
+    
+    // 模拟API请求
+    setTimeout(() => {
+        const contentList = document.getElementById(&#39;content-list&#39;);
+        const newContent = generateMoreContent();
+        
+        // 插入新内容到加载指示器之前
+        newContent.forEach(item => {
+            contentList.insertBefore(item, loadMoreIndicator);
+        });
+        
+        isLoading = false;
+        
+        // 模拟没有更多内容的情况
+        if (contentList.children.length > 10) {
+            hasMoreContent = false;
+            loadMoreIndicator.innerHTML = &#39;<span class="text-base-content/50 text-sm">没有更多内容了</span>&#39;;
+        } else {
+            loadMoreIndicator.style.display = &#39;none&#39;;
+        }
+    }, 1500);
+}
+
+// 生成更多内容
+function generateMoreContent() {
+    const mockContent = [
+        {
+            title: &#39;劳动争议调解仲裁法解读&#39;,
+            description: &#39;全面解析劳动争议处理程序和注意事项&#39;,
+            author: &#39;赵律师&#39;,
+            time: &#39;5天前&#39;,
+            views: &#39;1.2万阅读&#39;,
+            image: &#39;Labor+Dispute&#39;
+        },
+        {
+            title: &#39;公司法修订要点分析&#39;,
+            description: &#39;新公司法的重要变化及对企业的影响&#39;,
+            author: &#39;孙法务&#39;,
+            time: &#39;1周前&#39;,
+            views: &#39;8千阅读&#39;,
+            image: &#39;Company+Law&#39;
+        }
+    ];
+    
+    return mockContent.map(item => {
+        const div = document.createElement(&#39;div&#39;);
+        div.className = &#39;card bg-base-100 shadow-sm border border-base-200 touch-feedback&#39;;
+        div.setAttribute(&#39;onclick&#39;, "navigateTo(&#39;legal_education_content_detail&#39;)");
+        div.setAttribute(&#39;data-repeatable&#39;, &#39;true&#39;);
+        div.innerHTML = `
+            <div class="card-body p-4">
+                <div class="flex gap-3">
+                    <div class="w-16 h-12 rounded-lg overflow-hidden bg-base-200 flex-shrink-0">
+                        <img src="https://placehold.co/64x48.png?text=${item.image}" alt="${item.title}图片" class="w-full h-full object-cover" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-medium text-base text-base-content mb-1 line-clamp-2">${item.title}</h3>
+                        <p class="text-sm text-base-content/70 mb-2 line-clamp-2">${item.description}</p>
+                        <div class="flex items-center gap-4 text-xs text-base-content/60">
+                            <span class="flex items-center gap-1">
+                                <span class="iconify" data-icon="heroicons:user" data-width="12"></span>
+                                ${item.author}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="iconify" data-icon="heroicons:clock" data-width="12"></span>
+                                ${item.time}
+                            </span>
+                            <span class="flex items-center gap-1">
+                                <span class="iconify" data-icon="heroicons:eye" data-width="12"></span>
+                                ${item.views}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        return div;
+    });
+}
+
+// 搜索功能
+document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+    const searchInput = document.getElementById(&#39;search-input&#39;);
+    let searchTimeout;
+    
+    searchInput.addEventListener(&#39;input&#39;, function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            currentFilters.search = this.value;
+            if (this.value.length > 0) {
+                reloadContent();
+            }
+        }, 500);
+    });
+});
+</script>
+  
+
+<script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+  </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

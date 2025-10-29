@@ -1,0 +1,876 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>合同对比选项</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 402
+                const height = 874
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'splash_screen': '启动页',
+    'onboarding_intro': '引导页1 - 欢迎',
+    'onboarding_feature_overview': '引导页2 - 功能概览',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
+    'contract_scan_upload': '合同扫描上传',
+    'contract_scan_processing': '合同解析中',
+    'contract_scan_results': '合同解析结果',
+    'contract_scan_compare_options': '合同对比选项',
+    'contract_scan_comparison_report': '合同对比报告',
+    'rights_protection_entry': '维权导航入口',
+    'rights_protection_problem_description': '问题描述',
+    'rights_protection_guided_inquiry': 'AI引导问询',
+    'rights_protection_analysis_results': '维权初步分析',
+    'rights_protection_action_plan': '维权行动方案',
+    'rights_protection_progress_management': '维权进度管理',
+    'rights_protection_evidence_guide': '证据清单与取证指引',
+    'rights_protection_agency_info': '机构指引与管辖规则',
+    'rights_protection_document_templates': '法律文书辅助',
+    'dialogue_simulation_mode_select': '情景模拟模式选择',
+    'dialogue_simulation_scenario_list': '预设情景库',
+    'dialogue_simulation_custom_setup': '自定义情景设置',
+    'dialogue_simulation_active': '情景对话中',
+    'dialogue_simulation_feedback_report': '模拟反馈报告',
+    'legal_education_dashboard': '普法与评估中心',
+    'legal_education_content_explore': '普法内容探索',
+    'legal_education_quiz_list': '法律测评题库',
+    'legal_education_quiz_session': '法律测评进行中',
+    'legal_education_quiz_results': '法律测评结果',
+    'legal_education_personalized_recommendations': '个性化推荐学习'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="zh" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>合同对比选项 - 职场法律助手</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+/* 职场法律助手 - 移动端样式配置 */
+:root {
+    /* 基于light主题的品牌色彩定制 */
+    --color-primary: rgba(59, 130, 246, 1); /* 专业蓝色 */
+    --color-primary-content: rgba(255, 255, 255, 1);
+    --color-secondary: rgba(107, 114, 128, 1); /* 中性灰 */
+    --color-secondary-content: rgba(255, 255, 255, 1);
+    --color-accent: rgba(16, 185, 129, 1); /* 成功绿 */
+    --color-accent-content: rgba(255, 255, 255, 1);
+    
+    /* 圆角设置 - 现代专业感 */
+    --radius-box: 0.75rem;
+    --radius-field: 0.5rem;
+    --radius-selector: 0.375rem;
+    
+    /* 边框设置 */
+    --border: 1px;
+}
+
+/* 移动端安全区域适配 */
+.mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 毛玻璃效果 - 用于导航栏 */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Apple风格阴影 */
+.soft-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 触摸反馈优化 */
+.touch-feedback {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 卡片样式 */
+.legal-card {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: var(--border) solid var(--color-base-200);
+}
+
+/* 文本层级 */
+.text-hierarchy-1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-hierarchy-2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.text-hierarchy-3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 状态颜色 */
+.status-success {
+    color: var(--color-success);
+}
+
+.status-warning {
+    color: var(--color-warning);
+}
+
+.status-error {
+    color: var(--color-error);
+}
+
+/* 页面主体容器 */
+body {
+    padding-bottom: 4rem; /* 为底部导航预留空间 */
+}
+</style> <style>
+/* 选项卡片选中状态 */
+.option-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.option-card.selected {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary)/5, var(--color-primary)/10);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+}
+
+.option-card:hover:not(.selected) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 选项指示器动画 */
+.option-indicator {
+    transition: all 0.3s ease;
+}
+
+.option-card.selected .option-indicator {
+    border-color: var(--color-primary);
+    background: var(--color-primary)/10;
+}
+
+.selected-dot {
+    animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 详情展开动画 */
+#details-content {
+    transition: all 0.3s ease;
+}
+
+#detailed-info {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+#detailed-info.expanding {
+    animation: expandHeight 0.3s ease-out;
+}
+
+@keyframes expandHeight {
+    0% {
+        max-height: 0;
+        opacity: 0;
+    }
+    100% {
+        max-height: 300px;
+        opacity: 1;
+    }
+}
+
+/* 按钮禁用状态 */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+    transform: none;
+}
+
+/* 表单元素焦点增强 */
+.select:focus {
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* 卡片内图标容器 */
+.legal-card .w-12.h-12 {
+    transition: all 0.3s ease;
+}
+
+.option-card.selected .w-12.h-12 {
+    transform: scale(1.1);
+}
+
+/* 移动端触摸优化 */
+@media (max-width: 768px) {
+    .option-card {
+        padding: 1.25rem;
+    }
+    
+    .touch-feedback:active {
+        transform: scale(0.98);
+    }
+}
+
+/* 确保底部导航显示 */
+[data-section-id="common_dock_mobile"] {
+    display: block !important;
+}
+</style>
+  <script src="./assets/static/uxbot/25_6/holder.js"></script><style>
+.io8zd.spark-custom-io8zd#io8zd {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 42px;
+  margin-top: 0px;
+}
+
+</style></head>
+  <body class="bg-base-100 min-h-screen flex flex-col">
+    <div data-section-id="common_header_mobile" data-section-type="common_header" class="sticky top-0 z-50 glass-effect soft-shadow">
+  <div class="flex items-center justify-between h-14 px-4">
+    <!-- 左侧：返回按钮 --><button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback" onclick="handleBackAction()">
+      <span class="iconify text-base-content" data-icon="heroicons:arrow-left" data-width="24"></span></button><!-- 中间：页面标题 -->
+    <h1 id="io8zd" class="text-lg font-medium text-base-content truncate px-4 header-title flex-1 text-center io8zd spark-custom-io8zd io8zd">
+      合同对比选项
+    </h1>
+    <!-- 右侧：操作按钮 -->
+    <div class="flex items-center gap-1">
+      <button id="ilr5g" class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback header-action-btn" style="display: none;" onclick="handleHeaderAction()">
+        <span class="iconify text-base-content header-action-icon" data-icon="heroicons:ellipsis-horizontal" data-width="24"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<style>
+.io8zd.spark-custom-io8zd#io8zd {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 42px;
+  margin-top: 0px;
+}
+
+</style>
+    <div class="flex-1 flex flex-col px-4 py-6">
+      <!-- 对比选项区域 -->
+      <div class="mb-8">
+        <h1 class="text-hierarchy-1 text-base-content mb-6 text-center">
+          选择对比方式
+        </h1>
+        <!-- 对比选项卡片 -->
+        <div class="space-y-4 mb-8">
+          <!-- 与历史版本对比 -->
+          <div data-repeatable="true" data-type="card" id="option-history" class="legal-card p-6 cursor-pointer touch-feedback" onclick="selectOption(&#39;history&#39;)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="iconify text-primary" data-icon="heroicons:document-duplicate" data-width="24"></span>
+              </div>
+              <div class="flex-1">
+                <h3 id="islyc" class="text-hierarchy-2 text-base-content mb-2 islyc spark-custom-islyc">
+                  与历史版本对比
+                </h3>
+                <p id="i4ix3" class="text-hierarchy-3 text-base-content/70 i4ix3 spark-custom-i4ix3">
+                  追溯合同修改轨迹，洞悉版本演变
+                </p>
+              </div>
+              <div id="indicator-history" class="w-6 h-6 rounded-full border-2 border-base-300 flex items-center justify-center option-indicator">
+                <div class="w-3 h-3 bg-primary rounded-full hidden selected-dot"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 与另一份合同对比 -->
+          <div data-repeatable="true" data-type="card" id="option-contract" class="legal-card p-6 cursor-pointer touch-feedback" onclick="selectOption(&#39;contract&#39;)">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <span class="iconify text-accent" data-icon="heroicons:document-text" data-width="24"></span>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-hierarchy-2 text-base-content mb-2">
+                  与另一份合同对比
+                </h3>
+                <p class="text-hierarchy-3 text-base-content/70">
+                  精准发现异同，全面掌握差异
+                </p>
+              </div>
+              <div id="indicator-contract" class="w-6 h-6 rounded-full border-2 border-base-300 flex items-center justify-center option-indicator">
+                <div class="w-3 h-3 bg-primary rounded-full hidden selected-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 历史版本选择器 -->
+        <div id="history-selector" class="hidden mb-6">
+          <div class="form-control">
+            <label class="label"><span class="label-text text-hierarchy-3">选择历史版本</span></label><select id="history-version" class="select select-bordered w-full">
+              <option disabled="" selected="">请选择要对比的历史版本</option>
+              <option value="v1">版本 1.0 - 2024年10月15日</option>
+              <option value="v2">版本 2.0 - 2024年10月20日</option>
+              <option value="v3">版本 3.0 - 2024年10月25日</option>
+            </select>
+          </div>
+        </div>
+        <!-- 合同选择器 -->
+        <div id="contract-selector" class="hidden mb-6">
+          <div class="form-control">
+            <label class="label"><span class="label-text text-hierarchy-3">选择对比合同</span></label><select id="compare-contract" class="select select-bordered w-full">
+              <option disabled="" selected="">请选择要对比的合同</option>
+              <option value="contract1">劳动合同 - 张三 - 2024年9月</option>
+              <option value="contract2">实习协议 - 李四 - 2024年8月</option>
+              <option value="contract3">兼职合同 - 王五 - 2024年7月</option>
+            </select>
+          </div>
+        </div>
+        <!-- 开始对比按钮 --><button data-type="button" id="start-compare-btn" disabled="" class="btn btn-primary btn-block touch-feedback" onclick="startComparison()">
+          <span class="iconify" data-icon="heroicons:magnifying-glass" data-width="20"></span><span data-type="text">开始对比</span>
+        </button>
+      </div>
+      <!-- 对比逻辑说明 -->
+      <div class="legal-card p-6">
+        <div class="flex items-center justify-between mb-4 cursor-pointer" onclick="toggleDetails()">
+          <h2 class="text-hierarchy-2 text-base-content">
+            合同对比如何帮助您?
+          </h2>
+          <span class="iconify text-base-content/50 transition-transform duration-300" data-icon="heroicons:chevron-down" data-width="20" id="details-arrow"></span>
+        </div>
+        <div id="details-content">
+          <p class="text-hierarchy-3 text-base-content/80 leading-relaxed mb-4">
+            通过AI智能分析，高亮显示新旧版本间的差异，尤其关注条款修改、风险增减及解决情况。帮助您快速理解合同演变，规避潜在法律风险。
+          </p>
+          <div id="detailed-info" class="hidden">
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="iconify text-success flex-shrink-0 mt-1" data-icon="heroicons:check-circle" data-width="16"></span>
+                <div>
+                  <h4 class="font-medium text-base-content mb-1">
+                    智能差异识别
+                  </h4>
+                  <p class="text-sm text-base-content/70">
+                    自动标记文本变化、条款增删、格式调整等所有修改内容
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="iconify text-warning flex-shrink-0 mt-1" data-icon="heroicons:exclamation-triangle" data-width="16"></span>
+                <div>
+                  <h4 class="font-medium text-base-content mb-1">
+                    风险变化分析
+                  </h4>
+                  <p class="text-sm text-base-content/70">
+                    重点关注可能影响您权益的条款变化，提供风险等级评估
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="iconify text-info flex-shrink-0 mt-1" data-icon="heroicons:light-bulb" data-width="16"></span>
+                <div>
+                  <h4 class="font-medium text-base-content mb-1">
+                    专业建议提供
+                  </h4>
+                  <p class="text-sm text-base-content/70">
+                    基于法律专业知识，为每项重要变化提供应对建议
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-section-id="common_dock_mobile" data-section-type="common_footer" class="fixed bottom-0 left-0 right-0 z-40 glass-effect soft-shadow mobile-safe-area">
+  <div class="flex items-center justify-around h-16 px-2">
+    <!-- 首页 --><button data-tab-id="home" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;home&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:home" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">首页</span></button><!-- 合同扫描 --><button data-tab-id="scan" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;scan&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:document-magnifying-glass" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">合同扫描</span></button><!-- 维权导航 --><button data-tab-id="rights" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;rights&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:scale" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">维权导航</span></button><!-- 情景训练 --><button data-tab-id="training" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;training&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">情景训练</span></button><!-- 个人中心 --><button data-tab-id="profile" class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" onclick="navigateToTab(&#39;profile&#39;)">
+      <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:user" data-width="24"></span><span class="dock-label text-xs text-base-content opacity-60 mt-1">个人</span>
+    </button>
+  </div>
+</div>
+<script>
+(function() {
+    // 全局应用状态管理
+    window.APP_GLOBALS = window.APP_GLOBALS || {};
+    
+    // 全局导航函数
+    window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        
+        if (isInIframe) {
+            window.parent.postMessage({
+                type: &#39;iframeNavigation&#39;,
+                targetPageId: targetPageId
+            }, &#39;*&#39;);
+        } else {
+            window.location.href = targetFileName;
+        }
+    };
+
+    // 返回导航函数
+    window.goBack = function() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，导航到首页
+            navigateTo(&#39;home_dashboard&#39;);
+        }
+    };
+
+    // 底部导航栏激活状态管理
+    window.setActiveDockTab = function(tabId) {
+        const allTabs = document.querySelectorAll(&#39;.dock-tab&#39;);
+        allTabs.forEach(tab => {
+            const isActive = tab.dataset.tabId === tabId;
+            tab.classList.toggle(&#39;active&#39;, isActive);
+            
+            const icon = tab.querySelector(&#39;.dock-icon&#39;);
+            const label = tab.querySelector(&#39;.dock-label&#39;);
+            
+            if (isActive) {
+                icon.classList.add(&#39;text-primary&#39;);
+                icon.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.add(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            } else {
+                icon.classList.remove(&#39;text-primary&#39;);
+                icon.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.remove(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            }
+        });
+    };
+
+    // 显示/隐藏加载状态
+    window.showLoading = function(message = &#39;处理中...&#39;) {
+        const loading = document.createElement(&#39;div&#39;);
+        loading.id = &#39;global-loading&#39;;
+        loading.className = &#39;fixed inset-0 z-50 flex items-center justify-center bg-base-100/80 backdrop-blur-sm&#39;;
+        loading.innerHTML = `
+            <div class="flex flex-col items-center gap-4">
+                <span class="loading loading-spinner text-primary loading-lg"></span>
+                <p class="text-base-content/70">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loading);
+    };
+
+    window.hideLoading = function() {
+        const loading = document.getElementById(&#39;global-loading&#39;);
+        if (loading) {
+            loading.remove();
+        }
+    };
+
+    // Toast 通知函数
+    window.showToast = function(message, type = &#39;info&#39;, duration = 3000) {
+        const toast = document.createElement(&#39;div&#39;);
+        toast.className = `alert alert-${type} fixed top-4 left-4 right-4 z-50 shadow-lg`;
+        
+        const iconMap = {
+            &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+            &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+            &#39;error&#39;: &#39;heroicons:x-circle&#39;,
+            &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;
+        };
+        
+        toast.innerHTML = `
+            <span class="iconify" data-icon="${iconMap[type]}" data-width="24"></span>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    };
+
+    // 页面加载完成后的初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 检测当前页面并设置对应的dock激活状态
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        
+        // 页面到底部导航标签的映射
+        const pageToTabMapping = {
+            &#39;home_dashboard&#39;: &#39;home&#39;,
+            &#39;contract_scan_upload&#39;: &#39;scan&#39;,
+            &#39;contract_scan_processing&#39;: &#39;scan&#39;,
+            &#39;contract_scan_results&#39;: &#39;scan&#39;,
+            &#39;contract_scan_history&#39;: &#39;scan&#39;,
+            &#39;rights_protection_entry&#39;: &#39;rights&#39;,
+            &#39;rights_protection_problem_description&#39;: &#39;rights&#39;,
+            &#39;rights_protection_progress_management&#39;: &#39;rights&#39;,
+            &#39;dialogue_simulation_mode_select&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_active&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_history&#39;: &#39;training&#39;,
+            &#39;legal_education_dashboard&#39;: &#39;education&#39;,
+            &#39;legal_education_content_explore&#39;: &#39;education&#39;,
+            &#39;legal_education_quiz_list&#39;: &#39;education&#39;,
+            &#39;profile_settings&#39;: &#39;profile&#39;,
+            &#39;profile_edit&#39;: &#39;profile&#39;,
+            &#39;account_security&#39;: &#39;profile&#39;
+        };
+        
+        const activeTab = pageToTabMapping[currentPage];
+        if (activeTab) {
+            setActiveDockTab(activeTab);
+        }
+    });
+
+    // 合同扫描相关函数
+    window.contractScanUtils = {
+        // 模拟文件上传
+        uploadFile: function(file, callback) {
+            showLoading(&#39;正在上传合同文件...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback(true);
+            }, 2000);
+        },
+        
+        // 模拟AI解析
+        analyzeContract: function(callback) {
+            showLoading(&#39;AI正在解析合同内容...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    riskLevel: &#39;medium&#39;,
+                    keyPoints: [&#39;试用期条款&#39;, &#39;薪酬结构&#39;, &#39;工作时间&#39;],
+                    suggestions: [&#39;建议澄清薪酬构成&#39;, &#39;确认加班费计算方式&#39;]
+                });
+            }, 3000);
+        }
+    };
+
+    // 维权导航相关函数
+    window.rightsProtectionUtils = {
+        // 生成维权方案
+        generateActionPlan: function(problemData, callback) {
+            showLoading(&#39;AI正在分析您的情况...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    actionType: &#39;劳动仲裁&#39;,
+                    steps: [&#39;收集证据&#39;, &#39;提交申请&#39;, &#39;参加仲裁&#39;],
+                    timeline: &#39;预计2-3个月&#39;
+                });
+            }, 2500);
+        }
+    };
+
+})();
+</script><script>
+// 页面初始化
+document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+    // 更新头部标题
+    updateMobileHeader({
+        title: &#39;合同对比选项&#39;,
+        showBack: true,
+        showAction: false,
+        onBack: function() {
+            navigateTo(&#39;contract_scan_results&#39;);
+        }
+    });
+
+    // 确保底部导航显示
+    toggleDock(true);
+    setActiveDockTab(&#39;scan&#39;);
+});
+
+// 全局变量
+let selectedOption = null;
+let isDetailsExpanded = false;
+
+// 选择对比选项
+function selectOption(optionType) {
+    selectedOption = optionType;
+    
+    // 更新卡片选中状态
+    const allCards = document.querySelectorAll(&#39;.option-card&#39;);
+    const allIndicators = document.querySelectorAll(&#39;.option-indicator&#39;);
+    const allDots = document.querySelectorAll(&#39;.selected-dot&#39;);
+    
+    allCards.forEach(card => card.classList.remove(&#39;selected&#39;));
+    allDots.forEach(dot => dot.classList.add(&#39;hidden&#39;));
+    
+    const selectedCard = document.getElementById(`option-${optionType}`);
+    const selectedIndicator = document.getElementById(`indicator-${optionType}`);
+    const selectedDot = selectedIndicator.querySelector(&#39;.selected-dot&#39;);
+    
+    selectedCard.classList.add(&#39;selected&#39;);
+    selectedDot.classList.remove(&#39;hidden&#39;);
+    
+    // 显示/隐藏相应的选择器
+    const historySelector = document.getElementById(&#39;history-selector&#39;);
+    const contractSelector = document.getElementById(&#39;contract-selector&#39;);
+    
+    if (optionType === &#39;history&#39;) {
+        historySelector.classList.remove(&#39;hidden&#39;);
+        contractSelector.classList.add(&#39;hidden&#39;);
+        // 重置合同选择器
+        document.getElementById(&#39;compare-contract&#39;).selectedIndex = 0;
+    } else {
+        contractSelector.classList.remove(&#39;hidden&#39;);
+        historySelector.classList.add(&#39;hidden&#39;);
+        // 重置历史版本选择器
+        document.getElementById(&#39;history-version&#39;).selectedIndex = 0;
+    }
+    
+    // 检查是否可以启用开始对比按钮
+    updateStartButtonState();
+    
+    // 添加轻微的触觉反馈效果
+    if (navigator.vibrate) {
+        navigator.vibrate(50);
+    }
+}
+
+// 更新开始对比按钮状态
+function updateStartButtonState() {
+    const startBtn = document.getElementById(&#39;start-compare-btn&#39;);
+    let canStart = false;
+    
+    if (selectedOption === &#39;history&#39;) {
+        const historySelect = document.getElementById(&#39;history-version&#39;);
+        canStart = historySelect.selectedIndex > 0;
+    } else if (selectedOption === &#39;contract&#39;) {
+        const contractSelect = document.getElementById(&#39;compare-contract&#39;);
+        canStart = contractSelect.selectedIndex > 0;
+    }
+    
+    startBtn.disabled = !canStart;
+    
+    if (canStart) {
+        startBtn.classList.add(&#39;btn-primary&#39;);
+        startBtn.classList.remove(&#39;btn-disabled&#39;);
+    } else {
+        startBtn.classList.remove(&#39;btn-primary&#39;);
+        startBtn.classList.add(&#39;btn-disabled&#39;);
+    }
+}
+
+// 监听选择器变化
+document.addEventListener(&#39;change&#39;, function(e) {
+    if (e.target.id === &#39;history-version&#39; || e.target.id === &#39;compare-contract&#39;) {
+        updateStartButtonState();
+    }
+});
+
+// 开始对比
+function startComparison() {
+    if (!selectedOption) {
+        showToast(&#39;请先选择对比方式&#39;, &#39;warning&#39;);
+        return;
+    }
+    
+    let compareData = {
+        type: selectedOption
+    };
+    
+    if (selectedOption === &#39;history&#39;) {
+        const historySelect = document.getElementById(&#39;history-version&#39;);
+        if (historySelect.selectedIndex === 0) {
+            showToast(&#39;请选择要对比的历史版本&#39;, &#39;warning&#39;);
+            return;
+        }
+        compareData.version = historySelect.value;
+    } else {
+        const contractSelect = document.getElementById(&#39;compare-contract&#39;);
+        if (contractSelect.selectedIndex === 0) {
+            showToast(&#39;请选择要对比的合同&#39;, &#39;warning&#39;);
+            return;
+        }
+        compareData.contract = contractSelect.value;
+    }
+    
+    // 显示加载状态
+    showLoading(&#39;正在准备对比分析...&#39;);
+    
+    // 模拟对比准备过程
+    setTimeout(() => {
+        hideLoading();
+        
+        // 存储对比参数到全局状态
+        window.APP_GLOBALS.compareData = compareData;
+        
+        // 导航到对比报告页面
+        navigateTo(&#39;contract_scan_comparison_report&#39;);
+    }, 2000);
+}
+
+// 切换详情展开/收起
+function toggleDetails() {
+    const detailsContent = document.getElementById(&#39;detailed-info&#39;);
+    const arrow = document.getElementById(&#39;details-arrow&#39;);
+    
+    isDetailsExpanded = !isDetailsExpanded;
+    
+    if (isDetailsExpanded) {
+        detailsContent.classList.remove(&#39;hidden&#39;);
+        detailsContent.classList.add(&#39;expanding&#39;);
+        arrow.style.transform = &#39;rotate(180deg)&#39;;
+        
+        // 移除动画类，避免重复触发
+        setTimeout(() => {
+            detailsContent.classList.remove(&#39;expanding&#39;);
+        }, 300);
+    } else {
+        detailsContent.classList.add(&#39;hidden&#39;);
+        arrow.style.transform = &#39;rotate(0deg)&#39;;
+    }
+}
+
+// 预设对比模板功能（体验增强）
+function applyComparisonTemplate(templateType) {
+    switch(templateType) {
+        case &#39;version_iteration&#39;:
+            selectOption(&#39;history&#39;);
+            showToast(&#39;已应用版本迭代对比模板&#39;, &#39;success&#39;);
+            break;
+        case &#39;risk_revision&#39;:
+            selectOption(&#39;contract&#39;);
+            showToast(&#39;已应用风险修订对比模板&#39;, &#39;success&#39;);
+            break;
+        default:
+            showToast(&#39;未知的对比模板&#39;, &#39;error&#39;);
+    }
+}
+
+// 页面卸载时清理
+window.addEventListener(&#39;beforeunload&#39;, function() {
+    // 清理定时器等资源
+    if (window.comparisonTimeout) {
+        clearTimeout(window.comparisonTimeout);
+    }
+});
+</script>
+  
+
+<script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+  </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

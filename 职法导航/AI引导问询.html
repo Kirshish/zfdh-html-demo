@@ -1,0 +1,951 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>AI引导问询</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 402
+                const height = 874
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'splash_screen': '启动页',
+    'onboarding_intro': '引导页1 - 欢迎',
+    'onboarding_feature_overview': '引导页2 - 功能概览',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
+    'contract_scan_upload': '合同扫描上传',
+    'contract_scan_processing': '合同解析中',
+    'contract_scan_results': '合同解析结果',
+    'contract_scan_compare_options': '合同对比选项',
+    'contract_scan_comparison_report': '合同对比报告',
+    'rights_protection_entry': '维权导航入口',
+    'rights_protection_problem_description': '问题描述',
+    'rights_protection_guided_inquiry': 'AI引导问询',
+    'rights_protection_analysis_results': '维权初步分析',
+    'rights_protection_action_plan': '维权行动方案',
+    'rights_protection_progress_management': '维权进度管理',
+    'rights_protection_evidence_guide': '证据清单与取证指引',
+    'rights_protection_agency_info': '机构指引与管辖规则',
+    'rights_protection_document_templates': '法律文书辅助',
+    'dialogue_simulation_mode_select': '情景模拟模式选择',
+    'dialogue_simulation_scenario_list': '预设情景库',
+    'dialogue_simulation_custom_setup': '自定义情景设置',
+    'dialogue_simulation_active': '情景对话中',
+    'dialogue_simulation_feedback_report': '模拟反馈报告',
+    'legal_education_dashboard': '普法与评估中心',
+    'legal_education_content_explore': '普法内容探索',
+    'legal_education_quiz_list': '法律测评题库',
+    'legal_education_quiz_session': '法律测评进行中',
+    'legal_education_quiz_results': '法律测评结果',
+    'legal_education_personalized_recommendations': '个性化推荐学习'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="zh" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>AI引导问询 - 职场法律助手</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+/* 职场法律助手 - 移动端样式配置 */
+:root {
+    /* 基于light主题的品牌色彩定制 */
+    --color-primary: rgba(59, 130, 246, 1); /* 专业蓝色 */
+    --color-primary-content: rgba(255, 255, 255, 1);
+    --color-secondary: rgba(107, 114, 128, 1); /* 中性灰 */
+    --color-secondary-content: rgba(255, 255, 255, 1);
+    --color-accent: rgba(16, 185, 129, 1); /* 成功绿 */
+    --color-accent-content: rgba(255, 255, 255, 1);
+    
+    /* 圆角设置 - 现代专业感 */
+    --radius-box: 0.75rem;
+    --radius-field: 0.5rem;
+    --radius-selector: 0.375rem;
+    
+    /* 边框设置 */
+    --border: 1px;
+}
+
+/* 移动端安全区域适配 */
+.mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 毛玻璃效果 - 用于导航栏 */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Apple风格阴影 */
+.soft-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 触摸反馈优化 */
+.touch-feedback {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 卡片样式 */
+.legal-card {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: var(--border) solid var(--color-base-200);
+}
+
+/* 文本层级 */
+.text-hierarchy-1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-hierarchy-2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.text-hierarchy-3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 状态颜色 */
+.status-success {
+    color: var(--color-success);
+}
+
+.status-warning {
+    color: var(--color-warning);
+}
+
+.status-error {
+    color: var(--color-error);
+}
+
+/* 页面主体容器 */
+body {
+    padding-bottom: 4rem; /* 为底部导航预留空间 */
+}
+</style> <style>
+/* AI问询页面专用样式 */
+
+/* 进度条动画 */
+.progress-primary::-webkit-progress-value {
+    transition: width 0.5s ease-in-out;
+}
+
+/* AI气泡样式增强 */
+.ai-bubble {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary)/5 0%, var(--color-primary)/10 100%);
+    border: 1px solid var(--color-primary)/10;
+}
+
+.ai-bubble::before {
+    content: &#39;&#39;;
+    position: absolute;
+    top: 8px;
+    left: -6px;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid var(--color-primary)/5;
+}
+
+/* 输入框焦点增强 */
+.textarea:focus {
+    box-shadow: 0 0 0 2px var(--color-primary)/20;
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* 按钮悬停效果 */
+.btn:hover {
+    transform: translateY(-1px);
+    transition: transform 0.15s ease-out;
+}
+
+/* 卡片悬停效果 */
+.legal-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+}
+
+/* 提示区域样式 */
+.tip-section {
+    background: linear-gradient(135deg, var(--color-base-100) 0%, var(--color-base-200)/30 100%);
+    border-left: 3px solid var(--color-info);
+}
+
+.example-section {
+    background: linear-gradient(135deg, var(--color-accent)/5 0%, var(--color-accent)/10 100%);
+    border-left: 3px solid var(--color-accent);
+}
+
+/* 响应式调整 */
+@media (max-width: 402px) {
+    .legal-card {
+        margin: 0 -4px;
+        border-radius: var(--radius-field);
+    }
+    
+    .btn-block {
+        font-size: 0.875rem;
+    }
+}
+
+/* 隐藏底部导航栏 */
+[data-section-id="common_dock_mobile"] {
+    display: none;
+}
+
+/* 页面底部间距调整 */
+body {
+    padding-bottom: 0;
+}
+</style>
+  <script src="./assets/static/uxbot/25_6/holder.js"></script><style>
+#iz6ew.spark-custom-iz6ew {
+  padding-bottom: 0px;
+  padding-left: 17px;
+  padding-right: 35px;
+  padding-top: 0px;
+}
+
+.iz6ew.spark-custom-iz6ew#iz6ew {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 9px;
+  margin-top: 0px;
+}
+
+#ii53l.spark-custom-ii53l {
+  align-items: stretch;
+  font-size: 14px;
+  justify-content: flex-start;
+}
+
+#ir9bk.spark-custom-ir9bk {
+  justify-content: center;
+}
+
+</style></head>
+  <body class="bg-base-100 min-h-screen flex flex-col">
+    <div data-section-id="common_header_mobile" data-section-type="common_header" class="sticky top-0 z-50 glass-effect soft-shadow">
+  <div id="iy47" class="flex items-center justify-between h-14 px-4 iy47 spark-custom-iy47">
+    <!-- 左侧：返回按钮 --><button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback" onclick="handleBackAction()">
+      <span class="iconify text-base-content" data-icon="heroicons:arrow-left" data-width="24"></span></button><!-- 中间：页面标题 -->
+    <h1 id="iz6ew" class="text-lg font-medium text-base-content truncate px-4 header-title flex-1 text-center iz6ew spark-custom-iz6ew iz6ew">
+      AI引导问询
+    </h1>
+    <!-- 右侧：操作按钮 -->
+    <div class="flex items-center gap-1">
+      <button id="i50js" class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback header-action-btn" style="display: none;" onclick="handleHeaderAction()">
+        <span class="iconify text-base-content header-action-icon" data-icon="heroicons:ellipsis-horizontal" data-width="24"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<style>
+#iz6ew.spark-custom-iz6ew {
+  padding-bottom: 0px;
+  padding-left: 17px;
+  padding-right: 35px;
+  padding-top: 0px;
+}
+
+.iz6ew.spark-custom-iz6ew#iz6ew {
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 9px;
+  margin-top: 0px;
+}
+
+</style>
+    <div class="flex-1 flex flex-col px-4 py-6 space-y-6 ij7kb spark-custom-ij7kb" id="ij7kb">
+      <!-- 引导问询概览 -->
+      <div id="ifhrx" class="bg-base-100 rounded-lg p-4 space-y-4 ifhrx spark-custom-ifhrx">
+        <!-- 进度条 -->
+        <div class="space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-sm text-base-content/70">问询进度</span><span class="text-sm font-medium text-primary">3/5</span>
+          </div>
+          <progress value="60" max="100" class="progress progress-primary w-full"></progress>
+        </div>
+        <!-- AI提示区域 -->
+        <div id="iyrll" class="flex items-start gap-3 bg-primary/5 rounded-lg p-4 iyrll spark-custom-iyrll">
+          <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+            <span class="iconify text-primary" data-icon="heroicons:sparkles" data-width="16"></span>
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-primary">AI提示</span>
+            </div>
+            <p class="text-sm text-base-content/80">
+              我将通过几个关键问题来了解您的情况，以便为您提供最准确的维权建议。请详细回答每个问题。
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- AI问题卡片 -->
+      <div class="legal-card p-6 space-y-4">
+        <!-- 问题头部 -->
+        <div class="flex items-start gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+            <span class="iconify text-primary" data-icon="heroicons:chat-bubble-left-ellipsis" data-width="20"></span>
+          </div>
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium">问题 3</span><span class="text-xs text-base-content/60">AI智能问询</span>
+            </div>
+            <!-- AI问题气泡 -->
+            <div id="iw7ai" class="bg-primary/5 rounded-2xl rounded-tl-sm p-4 space-y-3 iw7ai spark-custom-iw7ai">
+              <p class="text-hierarchy-2 text-base-content">
+                请详细描述涉事的各方主体信息？
+              </p>
+              <!-- AI提示信息 -->
+              <div class="bg-base-100 rounded-lg p-3 space-y-2">
+                <div class="flex items-center gap-2">
+                  <span class="iconify text-info" data-icon="heroicons:information-circle" data-width="16"></span><span class="text-sm font-medium text-info">填写提示</span>
+                </div>
+                <p class="text-sm text-base-content/70">
+                  请填写涉事各方的身份信息，包括个人姓名、公司名称、职务等关键信息
+                </p>
+              </div>
+              <!-- 填写示例 -->
+              <div class="bg-accent/5 rounded-lg p-3 space-y-2">
+                <div class="flex items-center gap-2">
+                  <span class="iconify text-accent" data-icon="heroicons:light-bulb" data-width="16"></span><span class="text-sm font-medium text-accent">示例参考</span>
+                </div>
+                <p class="text-sm text-base-content/70">
+                  示例：用人单位是"XX科技有限公司"，我的直属领导是"张经理"，人事部门负责人是"李主管"
+                </p>
+              </div>
+            </div>
+            <!-- AI追问按钮 -->
+            <div class="flex justify-end">
+              <button class="btn btn-ghost btn-sm touch-feedback" onclick="requestAIFollowUp()">
+                <span class="iconify" data-icon="heroicons:arrow-path" data-width="16"></span><span class="ij7mf spark-custom-ij7mf" id="ij7mf">AI追问</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 文本输入区 -->
+      <div class="space-y-4">
+        <div class="form-control i5whf spark-custom-i5whf" id="i5whf">
+          <label class="label"><span class="label-text text-hierarchy-3 font-medium">您的回答</span></label><textarea placeholder="在此输入您的回答..." id="user-answer" class="textarea textarea-bordered h-32 resize-none"></textarea><label class="label"><span class="label-text-alt text-base-content/60 ii53l spark-custom-ii53l" id="ii53l"><span class="iconify ir9bk spark-custom-ir9bk" data-icon="heroicons:information-circle" data-width="14" id="ir9bk"></span>
+              请尽量详细描述，以便AI更好地理解您的情况
+            </span></label>
+        </div>
+      </div>
+      <!-- 操作按钮区 -->
+      <div class="flex flex-col gap-3 pt-4">
+        <button class="btn btn-primary btn-block touch-feedback" onclick="completeInquiry()">
+          <span class="iconify" data-icon="heroicons:check-circle" data-width="20"></span><span>完成问询</span></button><button class="btn btn-ghost btn-block touch-feedback" onclick="goBackToDescription()">
+          <span class="iconify" data-icon="heroicons:arrow-left" data-width="20"></span><span>返回问题描述</span>
+        </button>
+      </div>
+    </div>
+    <div data-section-id="common_dock_mobile" data-section-type="common_footer" class="fixed bottom-0 left-0 right-0 z-40 glass-effect soft-shadow mobile-safe-area">
+    <div class="flex items-center justify-around h-16 px-2">
+        <!-- 首页 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="home" onclick="navigateToTab(&#39;home&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:home" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">首页</span>
+        </button>
+
+        <!-- 合同扫描 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="scan" onclick="navigateToTab(&#39;scan&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:document-magnifying-glass" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">合同扫描</span>
+        </button>
+
+        <!-- 维权导航 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="rights" onclick="navigateToTab(&#39;rights&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:scale" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">维权导航</span>
+        </button>
+
+        <!-- 情景训练 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="training" onclick="navigateToTab(&#39;training&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">情景训练</span>
+        </button>
+
+        <!-- 个人中心 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="profile" onclick="navigateToTab(&#39;profile&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:user" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">个人</span>
+        </button>
+    </div>
+</div>
+
+<style>
+[data-section-id="common_dock_mobile"] {
+    border-top: var(--border) solid var(--color-base-200);
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab {
+    min-width: 60px;
+    border-radius: var(--radius-field);
+    transition: all 0.2s ease-in-out;
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab.active .dock-icon {
+    color: var(--color-primary) !important;
+    opacity: 1 !important;
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab.active .dock-label {
+    color: var(--color-primary) !important;
+    opacity: 1 !important;
+    font-weight: 500;
+}
+
+/* 确保页面底部有足够空间 */
+body {
+    padding-bottom: 4rem; /* 为dock留出空间 */
+}
+</style>
+
+<script>
+(function() {
+    // 导航到对应标签页的主页面
+    window.navigateToTab = function(tabId) {
+        const tabToPageMapping = {
+            &#39;home&#39;: &#39;home_dashboard&#39;,
+            &#39;scan&#39;: &#39;contract_scan_upload&#39;,
+            &#39;rights&#39;: &#39;rights_protection_entry&#39;,
+            &#39;training&#39;: &#39;dialogue_simulation_mode_select&#39;,
+            &#39;education&#39;: &#39;legal_education_dashboard&#39;,
+            &#39;profile&#39;: &#39;profile_settings&#39;
+        };
+
+        const targetPage = tabToPageMapping[tabId];
+        if (targetPage) {
+            // 先更新激活状态
+            setActiveDockTab(tabId);
+            // 然后导航
+            navigateTo(targetPage);
+        }
+    };
+
+    // 隐藏/显示dock的函数
+    window.toggleDock = function(show) {
+        const dock = document.querySelector(&#39;[data-section-id="common_dock_mobile"]&#39;);
+        if (dock) {
+            dock.style.display = show ? &#39;block&#39; : &#39;none&#39;;
+            // 相应调整body的padding-bottom
+            document.body.style.paddingBottom = show ? &#39;4rem&#39; : &#39;0&#39;;
+        }
+    };
+
+    // 检查是否需要显示dock
+    window.shouldShowDock = function(pageId) {
+        // 主要功能页面显示dock
+        const dockPages = [
+            &#39;home_dashboard&#39;,
+            &#39;contract_scan_upload&#39;, &#39;contract_scan_processing&#39;, &#39;contract_scan_results&#39;, &#39;contract_scan_history&#39;,
+            &#39;rights_protection_entry&#39;, &#39;rights_protection_problem_description&#39;, &#39;rights_protection_progress_management&#39;,
+            &#39;dialogue_simulation_mode_select&#39;, &#39;dialogue_simulation_active&#39;, &#39;dialogue_simulation_history&#39;,
+            &#39;legal_education_dashboard&#39;, &#39;legal_education_content_explore&#39;, &#39;legal_education_quiz_list&#39;,
+            &#39;profile_settings&#39;, &#39;account_security&#39;, &#39;notification_center&#39;
+        ];
+        return dockPages.includes(pageId);
+    };
+
+    // 根据当前页面自动显示/隐藏dock
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        const showDock = shouldShowDock(currentPage);
+        toggleDock(showDock);
+    });
+})();
+</script><script>
+(function() {
+    // 全局应用状态管理
+    window.APP_GLOBALS = window.APP_GLOBALS || {};
+    
+    // 全局导航函数
+    window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        
+        if (isInIframe) {
+            window.parent.postMessage({
+                type: &#39;iframeNavigation&#39;,
+                targetPageId: targetPageId
+            }, &#39;*&#39;);
+        } else {
+            window.location.href = targetFileName;
+        }
+    };
+
+    // 返回导航函数
+    window.goBack = function() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，导航到首页
+            navigateTo(&#39;home_dashboard&#39;);
+        }
+    };
+
+    // 底部导航栏激活状态管理
+    window.setActiveDockTab = function(tabId) {
+        const allTabs = document.querySelectorAll(&#39;.dock-tab&#39;);
+        allTabs.forEach(tab => {
+            const isActive = tab.dataset.tabId === tabId;
+            tab.classList.toggle(&#39;active&#39;, isActive);
+            
+            const icon = tab.querySelector(&#39;.dock-icon&#39;);
+            const label = tab.querySelector(&#39;.dock-label&#39;);
+            
+            if (isActive) {
+                icon.classList.add(&#39;text-primary&#39;);
+                icon.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.add(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            } else {
+                icon.classList.remove(&#39;text-primary&#39;);
+                icon.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.remove(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            }
+        });
+    };
+
+    // 显示/隐藏加载状态
+    window.showLoading = function(message = &#39;处理中...&#39;) {
+        const loading = document.createElement(&#39;div&#39;);
+        loading.id = &#39;global-loading&#39;;
+        loading.className = &#39;fixed inset-0 z-50 flex items-center justify-center bg-base-100/80 backdrop-blur-sm&#39;;
+        loading.innerHTML = `
+            <div class="flex flex-col items-center gap-4">
+                <span class="loading loading-spinner text-primary loading-lg"></span>
+                <p class="text-base-content/70">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loading);
+    };
+
+    window.hideLoading = function() {
+        const loading = document.getElementById(&#39;global-loading&#39;);
+        if (loading) {
+            loading.remove();
+        }
+    };
+
+    // Toast 通知函数
+    window.showToast = function(message, type = &#39;info&#39;, duration = 3000) {
+        const toast = document.createElement(&#39;div&#39;);
+        toast.className = `alert alert-${type} fixed top-4 left-4 right-4 z-50 shadow-lg`;
+        
+        const iconMap = {
+            &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+            &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+            &#39;error&#39;: &#39;heroicons:x-circle&#39;,
+            &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;
+        };
+        
+        toast.innerHTML = `
+            <span class="iconify" data-icon="${iconMap[type]}" data-width="24"></span>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    };
+
+    // 页面加载完成后的初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 检测当前页面并设置对应的dock激活状态
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        
+        // 页面到底部导航标签的映射
+        const pageToTabMapping = {
+            &#39;home_dashboard&#39;: &#39;home&#39;,
+            &#39;contract_scan_upload&#39;: &#39;scan&#39;,
+            &#39;contract_scan_processing&#39;: &#39;scan&#39;,
+            &#39;contract_scan_results&#39;: &#39;scan&#39;,
+            &#39;contract_scan_history&#39;: &#39;scan&#39;,
+            &#39;rights_protection_entry&#39;: &#39;rights&#39;,
+            &#39;rights_protection_problem_description&#39;: &#39;rights&#39;,
+            &#39;rights_protection_progress_management&#39;: &#39;rights&#39;,
+            &#39;dialogue_simulation_mode_select&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_active&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_history&#39;: &#39;training&#39;,
+            &#39;legal_education_dashboard&#39;: &#39;education&#39;,
+            &#39;legal_education_content_explore&#39;: &#39;education&#39;,
+            &#39;legal_education_quiz_list&#39;: &#39;education&#39;,
+            &#39;profile_settings&#39;: &#39;profile&#39;,
+            &#39;profile_edit&#39;: &#39;profile&#39;,
+            &#39;account_security&#39;: &#39;profile&#39;
+        };
+        
+        const activeTab = pageToTabMapping[currentPage];
+        if (activeTab) {
+            setActiveDockTab(activeTab);
+        }
+    });
+
+    // 合同扫描相关函数
+    window.contractScanUtils = {
+        // 模拟文件上传
+        uploadFile: function(file, callback) {
+            showLoading(&#39;正在上传合同文件...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback(true);
+            }, 2000);
+        },
+        
+        // 模拟AI解析
+        analyzeContract: function(callback) {
+            showLoading(&#39;AI正在解析合同内容...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    riskLevel: &#39;medium&#39;,
+                    keyPoints: [&#39;试用期条款&#39;, &#39;薪酬结构&#39;, &#39;工作时间&#39;],
+                    suggestions: [&#39;建议澄清薪酬构成&#39;, &#39;确认加班费计算方式&#39;]
+                });
+            }, 3000);
+        }
+    };
+
+    // 维权导航相关函数
+    window.rightsProtectionUtils = {
+        // 生成维权方案
+        generateActionPlan: function(problemData, callback) {
+            showLoading(&#39;AI正在分析您的情况...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    actionType: &#39;劳动仲裁&#39;,
+                    steps: [&#39;收集证据&#39;, &#39;提交申请&#39;, &#39;参加仲裁&#39;],
+                    timeline: &#39;预计2-3个月&#39;
+                });
+            }, 2500);
+        }
+    };
+
+})();
+</script><script>
+// 页面初始化
+document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+    // 更新头部标题
+    updateMobileHeader({
+        title: &#39;AI引导问询&#39;,
+        showBack: true,
+        showAction: false,
+        onBack: function() {
+            navigateTo(&#39;rights_protection_problem_description&#39;);
+        }
+    });
+
+    // 隐藏底部导航栏
+    toggleDock(false);
+
+    // 初始化页面状态
+    initializeInquiryPage();
+});
+
+// 全局变量
+let currentQuestionIndex = 3;
+let totalQuestions = 5;
+let inquiryData = {
+    answers: [],
+    currentAnswer: &#39;&#39;
+};
+
+// 初始化问询页面
+function initializeInquiryPage() {
+    // 更新进度显示
+    updateProgress();
+    
+    // 绑定输入框事件
+    const answerTextarea = document.getElementById(&#39;user-answer&#39;);
+    if (answerTextarea) {
+        answerTextarea.addEventListener(&#39;input&#39;, function() {
+            inquiryData.currentAnswer = this.value;
+            // 实时保存用户输入
+            saveCurrentAnswer();
+        });
+    }
+}
+
+// 更新进度显示
+function updateProgress() {
+    const progressBar = document.querySelector(&#39;.progress&#39;);
+    const progressText = document.querySelector(&#39;.text-primary&#39;);
+    
+    if (progressBar &amp;&amp; progressText) {
+        const percentage = (currentQuestionIndex / totalQuestions) * 100;
+        progressBar.value = percentage;
+        progressText.textContent = `${currentQuestionIndex}/${totalQuestions}`;
+    }
+}
+
+// AI追问功能
+function requestAIFollowUp() {
+    const followUpBtn = event.target.closest(&#39;button&#39;);
+    
+    // 显示加载状态
+    followUpBtn.disabled = true;
+    followUpBtn.innerHTML = `
+        <span class="loading loading-spinner loading-sm"></span>
+        <span>AI思考中...</span>
+    `;
+
+    // 模拟AI生成追问
+    setTimeout(() => {
+        // 恢复按钮状态
+        followUpBtn.disabled = false;
+        followUpBtn.innerHTML = `
+            <span class="iconify" data-icon="heroicons:arrow-path" data-width="16"></span>
+            <span>AI追问</span>
+        `;
+
+        // 显示AI追问内容
+        showAIFollowUp();
+    }, 1500);
+}
+
+// 显示AI追问内容
+function showAIFollowUp() {
+    const followUpQuestions = [
+        "您能具体说明一下与您发生纠纷的是公司的哪个部门或具体哪位负责人吗？",
+        "除了直接相关方，还有其他见证人或知情人吗？",
+        "对方在这个事件中担任什么职务，有什么决策权限？"
+    ];
+
+    const randomQuestion = followUpQuestions[Math.floor(Math.random() * followUpQuestions.length)];
+    
+    // 在问题卡片中添加追问内容
+    const questionCard = document.querySelector(&#39;.legal-card&#39;);
+    const followUpDiv = document.createElement(&#39;div&#39;);
+    followUpDiv.className = &#39;bg-warning/5 rounded-lg p-3 mt-3 border-l-3 border-warning&#39;;
+    followUpDiv.innerHTML = `
+        <div class="flex items-start gap-2">
+            <span class="iconify text-warning shrink-0 mt-1" data-icon="heroicons:chat-bubble-left-right" data-width="16"></span>
+            <div class="space-y-1">
+                <span class="text-sm font-medium text-warning">AI追问</span>
+                <p class="text-sm text-base-content/80">${randomQuestion}</p>
+            </div>
+        </div>
+    `;
+
+    // 移除之前的追问内容
+    const existingFollowUp = questionCard.querySelector(&#39;.bg-warning\\/5&#39;);
+    if (existingFollowUp) {
+        existingFollowUp.remove();
+    }
+
+    questionCard.appendChild(followUpDiv);
+
+    // 显示成功提示
+    showToast(&#39;AI已生成追问，请参考补充您的回答&#39;, &#39;info&#39;);
+}
+
+// 保存当前回答
+function saveCurrentAnswer() {
+    // 模拟保存到本地存储或发送到服务器
+    localStorage.setItem(&#39;inquiry_current_answer&#39;, inquiryData.currentAnswer);
+}
+
+// 完成问询
+function completeInquiry() {
+    const answerTextarea = document.getElementById(&#39;user-answer&#39;);
+    const answer = answerTextarea.value.trim();
+
+    if (!answer) {
+        showToast(&#39;请先回答当前问题再继续&#39;, &#39;warning&#39;);
+        answerTextarea.focus();
+        return;
+    }
+
+    // 保存当前答案
+    inquiryData.answers.push({
+        questionIndex: currentQuestionIndex,
+        answer: answer,
+        timestamp: new Date().toISOString()
+    });
+
+    // 显示处理中状态
+    showLoading(&#39;AI正在分析您的回答...&#39;);
+
+    // 模拟处理过程
+    setTimeout(() => {
+        hideLoading();
+        
+        // 保存完整的问询数据
+        localStorage.setItem(&#39;inquiry_data&#39;, JSON.stringify(inquiryData));
+        
+        // 导航到分析结果页面
+        navigateTo(&#39;rights_protection_analysis_results&#39;);
+    }, 2000);
+}
+
+// 返回问题描述页面
+function goBackToDescription() {
+    // 保存当前进度
+    saveCurrentAnswer();
+    
+    // 确认对话
+    if (inquiryData.currentAnswer) {
+        const confirmed = confirm(&#39;您有未保存的回答内容，确定要返回吗？&#39;);
+        if (!confirmed) {
+            return;
+        }
+    }
+
+    navigateTo(&#39;rights_protection_problem_description&#39;);
+}
+
+// 显示Toast消息
+function showToast(message, type = &#39;info&#39;) {
+    const toast = document.createElement(&#39;div&#39;);
+    toast.className = `alert alert-${type} fixed top-20 left-4 right-4 z-50 shadow-lg`;
+    
+    const iconMap = {
+        &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+        &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+        &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;,
+        &#39;error&#39;: &#39;heroicons:x-circle&#39;
+    };
+    
+    toast.innerHTML = `
+        <span class="iconify" data-icon="${iconMap[type]}" data-width="20"></span>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // 3秒后自动移除
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.remove();
+        }
+    }, 3000);
+}
+
+// 页面离开前保存数据
+window.addEventListener(&#39;beforeunload&#39;, function() {
+    saveCurrentAnswer();
+});
+</script>
+  
+
+<script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+  </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            

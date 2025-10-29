@@ -1,0 +1,1050 @@
+
+                <!DOCTYPE html>
+                <html lang="zh">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>模拟反馈报告</title>
+                  <style>
+                    *,
+                    *::before,
+                    *::after {
+                      box-sizing: border-box;
+                      margin: 0;
+                    }
+                    .iframe-outer {
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      bottom: 0;
+                      right: 0;
+                      display: flex;
+                      justify-content: center;
+                      background-color: #E0E0E0;
+                    }
+                    .iframe-wrapper {
+                      width: 100%;
+                      height: 100%;
+                      margin: 0 auto;
+                      transform-origin: center top;
+                      flex-shrink: 0;
+                    }
+                    #dynamicIframe {
+                      border: none;
+                      width: 100%;
+                      height: 100%;
+                    }
+                  </style>
+                  <script>
+                const width = 402
+                const height = 874
+                const resolutionRatio = width && height ? width / height : 1
+                const pageNameMap = {
+                  'splash_screen': '启动页',
+    'onboarding_intro': '引导页1 - 欢迎',
+    'onboarding_feature_overview': '引导页2 - 功能概览',
+    'login_register': '登录/注册',
+    'home_dashboard': '首页/仪表盘',
+    'contract_scan_upload': '合同扫描上传',
+    'contract_scan_processing': '合同解析中',
+    'contract_scan_results': '合同解析结果',
+    'contract_scan_compare_options': '合同对比选项',
+    'contract_scan_comparison_report': '合同对比报告',
+    'rights_protection_entry': '维权导航入口',
+    'rights_protection_problem_description': '问题描述',
+    'rights_protection_guided_inquiry': 'AI引导问询',
+    'rights_protection_analysis_results': '维权初步分析',
+    'rights_protection_action_plan': '维权行动方案',
+    'rights_protection_progress_management': '维权进度管理',
+    'rights_protection_evidence_guide': '证据清单与取证指引',
+    'rights_protection_agency_info': '机构指引与管辖规则',
+    'rights_protection_document_templates': '法律文书辅助',
+    'dialogue_simulation_mode_select': '情景模拟模式选择',
+    'dialogue_simulation_scenario_list': '预设情景库',
+    'dialogue_simulation_custom_setup': '自定义情景设置',
+    'dialogue_simulation_active': '情景对话中',
+    'dialogue_simulation_feedback_report': '模拟反馈报告',
+    'legal_education_dashboard': '普法与评估中心',
+    'legal_education_content_explore': '普法内容探索',
+    'legal_education_quiz_list': '法律测评题库',
+    'legal_education_quiz_session': '法律测评进行中',
+    'legal_education_quiz_results': '法律测评结果',
+    'legal_education_personalized_recommendations': '个性化推荐学习'
+                }
+                function setIframeSize(w, h) {
+                  const currentContainerRadio = w / h
+                  let widthValue = w
+                  let heightValue = h
+                  let zoom = 1
+                  if (currentContainerRadio > resolutionRatio) {
+                    widthValue = h * resolutionRatio
+                    heightValue = h
+                  } else {
+                    widthValue = w
+                    heightValue = w / resolutionRatio
+                  }
+                  zoom = width ? widthValue / width : 1
+                  return {
+                    width: widthValue / zoom + 'px',
+                    height: heightValue / zoom + 'px',
+                    zoom,
+                  }
+                }
+                function adjustIframeSize() {
+                  const iframeWrapper = document.querySelector(".iframe-wrapper")
+                  const { width, height, zoom } = setIframeSize(window.innerWidth, window.innerHeight)
+                  iframeWrapper.style.height = height
+                  iframeWrapper.style.width = width
+                  iframeWrapper.style.transform = 'scale(' + zoom + ')'
+                }
+                function sanitizeFilename(name) {
+                  return name.replace(/[\/:*?"<>|]/g, '_')
+                }
+                function handlePostMessage(event) {
+                  if (!event.data) {
+                    return
+                  }
+                  const { type, targetPageId } = event.data
+                  const targetPageName = pageNameMap[targetPageId]
+                  if (type === "iframeNavigation" && targetPageId && targetPageName) {
+                    window.location.href = targetPageName + '.html'
+                  }
+                }
+                window.addEventListener('message', handlePostMessage)
+                window.onload = adjustIframeSize
+                window.onresize = adjustIframeSize
+                window.onunload = () => {
+                  window.removeEventListener('message', handlePostMessage)
+                }
+              </script>
+                </head>
+                <body>
+                  <div class="iframe-outer">
+                    <div class="iframe-wrapper">
+                      <iframe id="dynamicIframe" srcdoc='<html lang="zh" data-theme="light"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>模拟反馈报告 - 职场法律助手</title>
+    <link href="./assets/static/uxbot/daisyui@5.css" rel="stylesheet" type="text/css">
+    <script src="./assets/static/uxbot/tailwind-browser@4.js"></script>
+    <link href="./assets/static/uxbot/daisyui-themes.css" rel="stylesheet" type="text/css">
+    <script src="./assets/3/3.1.1/iconify.min.js"></script>
+    <style>
+/* 职场法律助手 - 移动端样式配置 */
+:root {
+    /* 基于light主题的品牌色彩定制 */
+    --color-primary: rgba(59, 130, 246, 1); /* 专业蓝色 */
+    --color-primary-content: rgba(255, 255, 255, 1);
+    --color-secondary: rgba(107, 114, 128, 1); /* 中性灰 */
+    --color-secondary-content: rgba(255, 255, 255, 1);
+    --color-accent: rgba(16, 185, 129, 1); /* 成功绿 */
+    --color-accent-content: rgba(255, 255, 255, 1);
+    
+    /* 圆角设置 - 现代专业感 */
+    --radius-box: 0.75rem;
+    --radius-field: 0.5rem;
+    --radius-selector: 0.375rem;
+    
+    /* 边框设置 */
+    --border: 1px;
+}
+
+/* 移动端安全区域适配 */
+.mobile-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* 毛玻璃效果 - 用于导航栏 */
+.glass-effect {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Apple风格阴影 */
+.soft-shadow {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 触摸反馈优化 */
+.touch-feedback {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+.touch-feedback:active {
+    transform: scale(0.97);
+    opacity: 0.8;
+}
+
+/* 卡片样式 */
+.legal-card {
+    background: var(--color-base-100);
+    border-radius: var(--radius-box);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: var(--border) solid var(--color-base-200);
+}
+
+/* 文本层级 */
+.text-hierarchy-1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-hierarchy-2 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.text-hierarchy-3 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+/* 状态颜色 */
+.status-success {
+    color: var(--color-success);
+}
+
+.status-warning {
+    color: var(--color-warning);
+}
+
+.status-error {
+    color: var(--color-error);
+}
+
+/* 页面主体容器 */
+body {
+    padding-bottom: 4rem; /* 为底部导航预留空间 */
+}
+</style> <style>
+/* 反馈报告页面特定样式 */
+
+/* 径向进度条动画 */
+.radial-progress {
+    transition: --value 0.8s ease-in-out;
+}
+
+/* 评分卡片悬停效果 */
+.metric-card {
+    transition: all 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 决策点对比样式 */
+.decision-comparison {
+    position: relative;
+}
+
+.decision-comparison::before {
+    content: &#39;VS&#39;;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-base-100);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-selector);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-base-content);
+    z-index: 1;
+}
+
+/* 建议折叠面板样式增强 */
+.collapse-title {
+    transition: background-color 0.2s ease;
+}
+
+.collapse:has(input:checked) .collapse-title {
+    background-color: var(--color-primary);
+    color: var(--color-primary-content);
+}
+
+/* 评分数字动画 */
+@keyframes scoreCountUp {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.score-number {
+    animation: scoreCountUp 0.6s ease-out;
+}
+
+/* 状态徽章样式 */
+.performance-badge {
+    font-weight: 600;
+    letter-spacing: 0.025em;
+}
+
+/* 法律条文引用样式 */
+.legal-reference {
+    border-left: 3px solid var(--color-primary);
+    background: var(--color-primary);
+    background: rgba(var(--color-primary), 0.05);
+    font-family: &#39;SF Mono&#39;, &#39;Monaco&#39;, &#39;Inconsolata&#39;, &#39;Roboto Mono&#39;, monospace;
+}
+
+/* 建议内容样式 */
+.suggestion-content {
+    line-height: 1.6;
+}
+
+.suggestion-before {
+    background: rgba(var(--color-error), 0.1);
+    border-left: 3px solid var(--color-error);
+}
+
+.suggestion-after {
+    background: rgba(var(--color-success), 0.1);
+    border-left: 3px solid var(--color-success);
+}
+
+/* 响应式调整 */
+@media (max-width: 402px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .text-5xl {
+        font-size: 2.5rem;
+    }
+}
+
+/* 确保底部导航栏不显示 */
+[data-section-id="common_dock_mobile"] {
+    display: none !important;
+}
+
+/* 页面底部间距调整 */
+body {
+    padding-bottom: 1rem !important;
+}
+</style>
+  <script src="./assets/static/uxbot/25_6/holder.js"></script><style>
+#ijxij.spark-custom-ijxij {
+  padding-bottom: 18.5px;
+  padding-left: 25.5px;
+  padding-right: 25.5px;
+  padding-top: 25.5px;
+}
+
+.ijxij.spark-custom-ijxij#ijxij {
+  margin-bottom: 25px;
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: -15px;
+}
+
+.ish82.spark-custom-ish82#ish82 {
+  margin: -17px 0px 17px 0px;
+}
+
+</style></head>
+  <body class="bg-base-100 min-h-screen flex flex-col">
+    <div data-section-id="common_header_mobile" data-section-type="common_header" class="sticky top-0 z-50 glass-effect soft-shadow">
+  <div class="flex items-center justify-between h-14 px-4">
+    <!-- 左侧：返回按钮 --><button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback" onclick="handleBackAction()">
+      <span class="iconify text-base-content" data-icon="heroicons:arrow-left" data-width="24"></span></button><!-- 中间：页面标题 --><!-- 右侧：操作按钮 -->
+    <div class="flex items-center gap-1">
+      <button class="btn btn-ghost btn-sm w-10 h-10 p-0 touch-feedback header-action-btn" id="iufgl" style="display: none;" onclick="handleHeaderAction()">
+        <span class="iconify text-base-content header-action-icon" data-icon="heroicons:ellipsis-horizontal" data-width="24"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+    <div id="ihpvg" class="flex-1 flex flex-col px-4 py-6 space-y-8 ihpvg spark-custom-ihpvg">
+      <!-- 报告总结 -->
+      <section id="ijxij" class="legal-card p-6 ijxij spark-custom-ijxij">
+        <div class="text-center space-y-4">
+          <h1 id="ish82" class="text-hierarchy-1 text-base-content ish82 spark-custom-ish82 ish82">
+            模拟反馈报告
+          </h1>
+          <p class="text-sm text-base-content/60">2024年10月27日 14:30</p>
+          <div id="i1143" class="flex flex-col items-center space-y-3 i1143 spark-custom-i1143">
+            <div class="text-5xl font-bold text-primary">85</div>
+            <div class="text-lg text-base-content/80">综合评分</div>
+            <div class="badge badge-success badge-lg">优秀</div>
+          </div>
+          <p id="idn0b" class="text-base-content/70 leading-relaxed idn0b spark-custom-idn0b">
+            您在本次模拟对话中表现出色，法律依据引用准确，谈判策略合理。建议在沟通表达方面进一步提升。
+          </p>
+        </div>
+      </section>
+      <!-- 能力维度分析 -->
+      <section class="space-y-4">
+        <h2 id="i6v5h" class="text-hierarchy-2 text-base-content i6v5h spark-custom-i6v5h">
+          能力维度分析
+        </h2>
+        <div class="grid grid-cols-1 gap-4">
+          <!-- 法律依据引用准确性 -->
+          <div id="iylve" class="legal-card p-4 touch-feedback iylve spark-custom-iylve" onclick="showMetricDetail(&#39;legal&#39;)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-primary" data-icon="heroicons:scale" data-width="24"></span>
+                <div>
+                  <h3 class="text-hierarchy-3 font-medium">
+                    法律依据引用准确性
+                  </h3>
+                  <p class="text-sm text-base-content/60">条文引用与案例分析</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-success">90%</div>
+                <div role="progressbar" id="ivc1t" class="radial-progress text-success" style="--value:90; --size:2rem; --thickness:3px;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 谈判策略有效性 -->
+          <div class="legal-card p-4 touch-feedback" onclick="showMetricDetail(&#39;strategy&#39;)">
+            <div id="iownf" class="flex items-center justify-between iownf spark-custom-iownf">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-primary" data-icon="heroicons:puzzle-piece" data-width="24"></span>
+                <div>
+                  <h3 class="text-hierarchy-3 font-medium">谈判策略有效性</h3>
+                  <p class="text-sm text-base-content/60">策略选择与执行</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-warning">80%</div>
+                <div role="progressbar" id="izy5u" class="radial-progress text-warning" style="--value:80; --size:2rem; --thickness:3px;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 沟通表达流畅度 -->
+          <div class="legal-card p-4 touch-feedback" onclick="showMetricDetail(&#39;communication&#39;)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-primary" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span>
+                <div>
+                  <h3 class="text-hierarchy-3 font-medium">沟通表达流畅度</h3>
+                  <p class="text-sm text-base-content/60">语言组织与表达</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-info">75%</div>
+                <div role="progressbar" id="iuw1p" class="radial-progress text-info" style="--value:75; --size:2rem; --thickness:3px;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 风险预判能力 -->
+          <div class="legal-card p-4 touch-feedback" onclick="showMetricDetail(&#39;risk&#39;)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class="iconify text-primary" data-icon="heroicons:shield-exclamation" data-width="24"></span>
+                <div>
+                  <h3 class="text-hierarchy-3 font-medium">风险预判能力</h3>
+                  <p class="text-sm text-base-content/60">潜在风险识别</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-success">88%</div>
+                <div role="progressbar" id="ijfdn" class="radial-progress text-success" style="--value:88; --size:2rem; --thickness:3px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 优化话术建议 -->
+      <section class="space-y-4">
+        <h2 class="text-hierarchy-2 text-base-content">优化话术建议</h2>
+        <div class="space-y-3">
+          <!-- 建议1 -->
+          <div class="collapse collapse-arrow bg-base-200">
+            <input type="radio" name="suggestions-accordion">
+            <div class="collapse-title font-medium flex items-center gap-2">
+              <span class="iconify text-accent" data-icon="heroicons:light-bulb" data-width="20"></span><span>开场白优化建议</span>
+            </div>
+            <div class="collapse-content">
+              <div class="space-y-3 pt-2">
+                <p class="text-base-content/80">
+                  建议在开场白中更明确表达谈判意图，避免模糊表述。
+                </p>
+                <div class="bg-base-100 p-3 rounded-lg">
+                  <p class="text-sm text-base-content/60 mb-2">原话术：</p>
+                  <p class="text-sm italic">
+                    "我们希望能够达成一个双方都满意的协议..."
+                  </p>
+                </div>
+                <div class="bg-primary/10 p-3 rounded-lg">
+                  <p class="text-sm text-primary mb-2">建议话术：</p>
+                  <p class="text-sm">
+                    "基于劳动合同法第47条，我们希望就补偿金额达成明确协议..."
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 建议2 -->
+          <div class="collapse collapse-arrow bg-base-200">
+            <input type="radio" name="suggestions-accordion">
+            <div class="collapse-title font-medium flex items-center gap-2">
+              <span class="iconify text-accent" data-icon="heroicons:light-bulb" data-width="20"></span><span>证据展示技巧</span>
+            </div>
+            <div class="collapse-content">
+              <div class="space-y-3 pt-2">
+                <p class="text-base-content/80">
+                  在展示证据时，建议按照时间顺序和重要性排列，增强说服力。
+                </p>
+                <div class="alert alert-info">
+                  <span class="iconify" data-icon="heroicons:information-circle" data-width="20"></span><span class="text-sm">参考法条：《劳动争议调解仲裁法》第6条</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 建议3 -->
+          <div class="collapse collapse-arrow bg-base-200">
+            <input type="radio" name="suggestions-accordion">
+            <div class="collapse-title font-medium flex items-center gap-2">
+              <span class="iconify text-accent" data-icon="heroicons:light-bulb" data-width="20"></span><span>情绪控制与表达</span>
+            </div>
+            <div class="collapse-content">
+              <div class="space-y-3 pt-2">
+                <p class="text-base-content/80">
+                  在对方提出异议时，保持冷静并用事实回应，避免情绪化表达。
+                </p>
+                <div class="bg-warning/10 p-3 rounded-lg">
+                  <p class="text-sm text-warning mb-2">注意事项：</p>
+                  <p class="text-sm">
+                    避免使用"你们总是..."、"从来不..."等绝对化表述
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 关键决策点回顾 -->
+      <section class="space-y-4">
+        <h2 class="text-hierarchy-2 text-base-content">关键决策点回顾</h2>
+        <div class="space-y-4">
+          <!-- 决策点1 -->
+          <div class="legal-card p-4">
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="iconify text-primary" data-icon="heroicons:arrow-path" data-width="20"></span>
+                <h3 class="text-hierarchy-3 font-medium">
+                  第一轮谈判：是否先亮底牌？
+                </h3>
+              </div>
+              <div class="grid grid-cols-1 gap-3">
+                <div class="bg-error/10 p-3 rounded-lg border-l-4 border-error">
+                  <p class="text-sm text-error font-medium mb-1">您的选择：</p>
+                  <p class="text-sm">直接提出我方最高报价</p>
+                </div>
+                <div class="bg-success/10 p-3 rounded-lg border-l-4 border-success">
+                  <p class="text-sm text-success font-medium mb-1">AI建议：</p>
+                  <p class="text-sm">建议先听取对方意见，再逐步调整报价策略</p>
+                </div>
+              </div>
+              <div class="bg-base-100 p-3 rounded-lg">
+                <p class="text-sm text-base-content/70">
+                  <span class="font-medium">分析：</span>
+                  过早暴露底线可能失去谈判主动权，建议采用渐进式策略。
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- 决策点2 -->
+          <div class="legal-card p-4">
+            <div class="space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="iconify text-primary" data-icon="heroicons:arrow-path" data-width="20"></span>
+                <h3 class="text-hierarchy-3 font-medium">证据展示时机选择</h3>
+              </div>
+              <div class="grid grid-cols-1 gap-3">
+                <div class="bg-success/10 p-3 rounded-lg border-l-4 border-success">
+                  <p class="text-sm text-success font-medium mb-1">
+                    您的选择：
+                  </p>
+                  <p class="text-sm">在对方质疑时及时出示相关证据</p>
+                </div>
+                <div class="bg-success/10 p-3 rounded-lg border-l-4 border-success">
+                  <p class="text-sm text-success font-medium mb-1">AI建议：</p>
+                  <p class="text-sm">在适当时机展示证据，增强说服力</p>
+                </div>
+              </div>
+              <div class="bg-base-100 p-3 rounded-lg">
+                <p class="text-sm text-base-content/70">
+                  <span class="font-medium">分析：</span>
+                  您的时机把握很好，证据展示恰到好处。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- 后续操作 -->
+      <section class="space-y-4">
+        <h2 class="text-hierarchy-2 text-base-content">后续操作</h2>
+        <div class="space-y-3">
+          <button class="btn btn-primary btn-block touch-feedback" onclick="navigateTo(&#39;dialogue_simulation_history&#39;)">
+            <span class="iconify" data-icon="heroicons:clock" data-width="20"></span>
+            查看训练历史</button><button class="btn btn-outline btn-block touch-feedback" onclick="navigateTo(&#39;dialogue_simulation_mode_select&#39;)">
+            <span class="iconify" data-icon="heroicons:arrow-left" data-width="20"></span>
+            返回模式选择</button><button class="btn btn-accent btn-block touch-feedback" onclick="navigateTo(&#39;dialogue_simulation_mode_select&#39;)">
+            <span class="iconify" data-icon="heroicons:arrow-path" data-width="20"></span>
+            再练习一次
+          </button>
+        </div>
+      </section>
+    </div>
+    <div data-section-id="common_dock_mobile" data-section-type="common_footer" class="fixed bottom-0 left-0 right-0 z-40 glass-effect soft-shadow mobile-safe-area">
+    <div class="flex items-center justify-around h-16 px-2">
+        <!-- 首页 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="home" onclick="navigateToTab(&#39;home&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:home" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">首页</span>
+        </button>
+
+        <!-- 合同扫描 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="scan" onclick="navigateToTab(&#39;scan&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:document-magnifying-glass" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">合同扫描</span>
+        </button>
+
+        <!-- 维权导航 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="rights" onclick="navigateToTab(&#39;rights&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:scale" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">维权导航</span>
+        </button>
+
+        <!-- 情景训练 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="training" onclick="navigateToTab(&#39;training&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:chat-bubble-left-right" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">情景训练</span>
+        </button>
+
+        <!-- 个人中心 -->
+        <button class="dock-tab flex flex-col items-center py-1 px-3 touch-feedback" data-tab-id="profile" onclick="navigateToTab(&#39;profile&#39;)">
+            <span class="dock-icon iconify text-base-content opacity-60" data-icon="heroicons:user" data-width="24"></span>
+            <span class="dock-label text-xs text-base-content opacity-60 mt-1">个人</span>
+        </button>
+    </div>
+</div>
+
+<style>
+[data-section-id="common_dock_mobile"] {
+    border-top: var(--border) solid var(--color-base-200);
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab {
+    min-width: 60px;
+    border-radius: var(--radius-field);
+    transition: all 0.2s ease-in-out;
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab.active .dock-icon {
+    color: var(--color-primary) !important;
+    opacity: 1 !important;
+}
+
+[data-section-id="common_dock_mobile"] .dock-tab.active .dock-label {
+    color: var(--color-primary) !important;
+    opacity: 1 !important;
+    font-weight: 500;
+}
+
+/* 确保页面底部有足够空间 */
+body {
+    padding-bottom: 4rem; /* 为dock留出空间 */
+}
+</style>
+
+<script>
+(function() {
+    // 导航到对应标签页的主页面
+    window.navigateToTab = function(tabId) {
+        const tabToPageMapping = {
+            &#39;home&#39;: &#39;home_dashboard&#39;,
+            &#39;scan&#39;: &#39;contract_scan_upload&#39;,
+            &#39;rights&#39;: &#39;rights_protection_entry&#39;,
+            &#39;training&#39;: &#39;dialogue_simulation_mode_select&#39;,
+            &#39;education&#39;: &#39;legal_education_dashboard&#39;,
+            &#39;profile&#39;: &#39;profile_settings&#39;
+        };
+
+        const targetPage = tabToPageMapping[tabId];
+        if (targetPage) {
+            // 先更新激活状态
+            setActiveDockTab(tabId);
+            // 然后导航
+            navigateTo(targetPage);
+        }
+    };
+
+    // 隐藏/显示dock的函数
+    window.toggleDock = function(show) {
+        const dock = document.querySelector(&#39;[data-section-id="common_dock_mobile"]&#39;);
+        if (dock) {
+            dock.style.display = show ? &#39;block&#39; : &#39;none&#39;;
+            // 相应调整body的padding-bottom
+            document.body.style.paddingBottom = show ? &#39;4rem&#39; : &#39;0&#39;;
+        }
+    };
+
+    // 检查是否需要显示dock
+    window.shouldShowDock = function(pageId) {
+        // 主要功能页面显示dock
+        const dockPages = [
+            &#39;home_dashboard&#39;,
+            &#39;contract_scan_upload&#39;, &#39;contract_scan_processing&#39;, &#39;contract_scan_results&#39;, &#39;contract_scan_history&#39;,
+            &#39;rights_protection_entry&#39;, &#39;rights_protection_problem_description&#39;, &#39;rights_protection_progress_management&#39;,
+            &#39;dialogue_simulation_mode_select&#39;, &#39;dialogue_simulation_active&#39;, &#39;dialogue_simulation_history&#39;,
+            &#39;legal_education_dashboard&#39;, &#39;legal_education_content_explore&#39;, &#39;legal_education_quiz_list&#39;,
+            &#39;profile_settings&#39;, &#39;account_security&#39;, &#39;notification_center&#39;
+        ];
+        return dockPages.includes(pageId);
+    };
+
+    // 根据当前页面自动显示/隐藏dock
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        const showDock = shouldShowDock(currentPage);
+        toggleDock(showDock);
+    });
+})();
+</script><script>
+(function() {
+    // 全局应用状态管理
+    window.APP_GLOBALS = window.APP_GLOBALS || {};
+    
+    // 全局导航函数
+    window.navigateTo = function(targetPageId) {
+        const isInIframe = window.self !== window.top;
+        const targetFileName = `${targetPageId}.html`;
+        
+        if (isInIframe) {
+            window.parent.postMessage({
+                type: &#39;iframeNavigation&#39;,
+                targetPageId: targetPageId
+            }, &#39;*&#39;);
+        } else {
+            window.location.href = targetFileName;
+        }
+    };
+
+    // 返回导航函数
+    window.goBack = function() {
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            // 如果没有历史记录，导航到首页
+            navigateTo(&#39;home_dashboard&#39;);
+        }
+    };
+
+    // 底部导航栏激活状态管理
+    window.setActiveDockTab = function(tabId) {
+        const allTabs = document.querySelectorAll(&#39;.dock-tab&#39;);
+        allTabs.forEach(tab => {
+            const isActive = tab.dataset.tabId === tabId;
+            tab.classList.toggle(&#39;active&#39;, isActive);
+            
+            const icon = tab.querySelector(&#39;.dock-icon&#39;);
+            const label = tab.querySelector(&#39;.dock-label&#39;);
+            
+            if (isActive) {
+                icon.classList.add(&#39;text-primary&#39;);
+                icon.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.add(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.remove(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            } else {
+                icon.classList.remove(&#39;text-primary&#39;);
+                icon.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+                label.classList.remove(&#39;text-primary&#39;, &#39;font-medium&#39;);
+                label.classList.add(&#39;text-base-content&#39;, &#39;opacity-60&#39;);
+            }
+        });
+    };
+
+    // 显示/隐藏加载状态
+    window.showLoading = function(message = &#39;处理中...&#39;) {
+        const loading = document.createElement(&#39;div&#39;);
+        loading.id = &#39;global-loading&#39;;
+        loading.className = &#39;fixed inset-0 z-50 flex items-center justify-center bg-base-100/80 backdrop-blur-sm&#39;;
+        loading.innerHTML = `
+            <div class="flex flex-col items-center gap-4">
+                <span class="loading loading-spinner text-primary loading-lg"></span>
+                <p class="text-base-content/70">${message}</p>
+            </div>
+        `;
+        document.body.appendChild(loading);
+    };
+
+    window.hideLoading = function() {
+        const loading = document.getElementById(&#39;global-loading&#39;);
+        if (loading) {
+            loading.remove();
+        }
+    };
+
+    // Toast 通知函数
+    window.showToast = function(message, type = &#39;info&#39;, duration = 3000) {
+        const toast = document.createElement(&#39;div&#39;);
+        toast.className = `alert alert-${type} fixed top-4 left-4 right-4 z-50 shadow-lg`;
+        
+        const iconMap = {
+            &#39;info&#39;: &#39;heroicons:information-circle&#39;,
+            &#39;success&#39;: &#39;heroicons:check-circle&#39;,
+            &#39;error&#39;: &#39;heroicons:x-circle&#39;,
+            &#39;warning&#39;: &#39;heroicons:exclamation-triangle&#39;
+        };
+        
+        toast.innerHTML = `
+            <span class="iconify" data-icon="${iconMap[type]}" data-width="24"></span>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.remove();
+        }, duration);
+    };
+
+    // 页面加载完成后的初始化
+    document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+        // 检测当前页面并设置对应的dock激活状态
+        const currentPage = window.location.pathname.split(&#39;/&#39;).pop().replace(&#39;.html&#39;, &#39;&#39;);
+        
+        // 页面到底部导航标签的映射
+        const pageToTabMapping = {
+            &#39;home_dashboard&#39;: &#39;home&#39;,
+            &#39;contract_scan_upload&#39;: &#39;scan&#39;,
+            &#39;contract_scan_processing&#39;: &#39;scan&#39;,
+            &#39;contract_scan_results&#39;: &#39;scan&#39;,
+            &#39;contract_scan_history&#39;: &#39;scan&#39;,
+            &#39;rights_protection_entry&#39;: &#39;rights&#39;,
+            &#39;rights_protection_problem_description&#39;: &#39;rights&#39;,
+            &#39;rights_protection_progress_management&#39;: &#39;rights&#39;,
+            &#39;dialogue_simulation_mode_select&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_active&#39;: &#39;training&#39;,
+            &#39;dialogue_simulation_history&#39;: &#39;training&#39;,
+            &#39;legal_education_dashboard&#39;: &#39;education&#39;,
+            &#39;legal_education_content_explore&#39;: &#39;education&#39;,
+            &#39;legal_education_quiz_list&#39;: &#39;education&#39;,
+            &#39;profile_settings&#39;: &#39;profile&#39;,
+            &#39;profile_edit&#39;: &#39;profile&#39;,
+            &#39;account_security&#39;: &#39;profile&#39;
+        };
+        
+        const activeTab = pageToTabMapping[currentPage];
+        if (activeTab) {
+            setActiveDockTab(activeTab);
+        }
+    });
+
+    // 合同扫描相关函数
+    window.contractScanUtils = {
+        // 模拟文件上传
+        uploadFile: function(file, callback) {
+            showLoading(&#39;正在上传合同文件...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback(true);
+            }, 2000);
+        },
+        
+        // 模拟AI解析
+        analyzeContract: function(callback) {
+            showLoading(&#39;AI正在解析合同内容...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    riskLevel: &#39;medium&#39;,
+                    keyPoints: [&#39;试用期条款&#39;, &#39;薪酬结构&#39;, &#39;工作时间&#39;],
+                    suggestions: [&#39;建议澄清薪酬构成&#39;, &#39;确认加班费计算方式&#39;]
+                });
+            }, 3000);
+        }
+    };
+
+    // 维权导航相关函数
+    window.rightsProtectionUtils = {
+        // 生成维权方案
+        generateActionPlan: function(problemData, callback) {
+            showLoading(&#39;AI正在分析您的情况...&#39;);
+            setTimeout(() => {
+                hideLoading();
+                if (callback) callback({
+                    actionType: &#39;劳动仲裁&#39;,
+                    steps: [&#39;收集证据&#39;, &#39;提交申请&#39;, &#39;参加仲裁&#39;],
+                    timeline: &#39;预计2-3个月&#39;
+                });
+            }, 2500);
+        }
+    };
+
+})();
+</script><script>
+// 页面初始化
+document.addEventListener(&#39;DOMContentLoaded&#39;, function() {
+    // 更新头部标题
+    updateMobileHeader({
+        title: &#39;模拟反馈报告&#39;,
+        showBack: true,
+        showAction: false,
+        onBack: function() {
+            navigateTo(&#39;dialogue_simulation_mode_select&#39;);
+        }
+    });
+
+    // 确保底部导航栏隐藏
+    toggleDock(false);
+
+    // 初始化动画效果
+    initializeAnimations();
+});
+
+// 初始化页面动画
+function initializeAnimations() {
+    // 为评分数字添加动画类
+    const scoreElement = document.querySelector(&#39;.text-5xl&#39;);
+    if (scoreElement) {
+        scoreElement.classList.add(&#39;score-number&#39;);
+    }
+
+    // 为径向进度条添加延迟动画
+    const progressBars = document.querySelectorAll(&#39;.radial-progress&#39;);
+    progressBars.forEach((bar, index) => {
+        setTimeout(() => {
+            bar.style.setProperty(&#39;--value&#39;, bar.style.getPropertyValue(&#39;--value&#39;));
+        }, index * 200);
+    });
+}
+
+// 显示维度详细信息
+function showMetricDetail(metricType) {
+    const details = {
+        &#39;legal&#39;: {
+            title: &#39;法律依据引用准确性&#39;,
+            score: &#39;90%&#39;,
+            description: &#39;您在对话中准确引用了《劳动合同法》第47条和相关司法解释，法条适用恰当。&#39;,
+            strengths: [&#39;条文引用准确&#39;, &#39;适用场景正确&#39;, &#39;逻辑清晰&#39;],
+            improvements: [&#39;可以补充更多案例支撑&#39;]
+        },
+        &#39;strategy&#39;: {
+            title: &#39;谈判策略有效性&#39;,
+            score: &#39;80%&#39;,
+            description: &#39;整体策略合理，但在某些关键节点可以采用更灵活的方式。&#39;,
+            strengths: [&#39;策略思路清晰&#39;, &#39;目标明确&#39;],
+            improvements: [&#39;可以更灵活应对突发情况&#39;, &#39;增强策略的层次性&#39;]
+        },
+        &#39;communication&#39;: {
+            title: &#39;沟通表达流畅度&#39;,
+            score: &#39;75%&#39;,
+            description: &#39;表达基本流畅，但在复杂问题阐述时略显不够简洁。&#39;,
+            strengths: [&#39;逻辑清晰&#39;, &#39;用词准确&#39;],
+            improvements: [&#39;提高表达的简洁性&#39;, &#39;增强说服力&#39;]
+        },
+        &#39;risk&#39;: {
+            title: &#39;风险预判能力&#39;,
+            score: &#39;88%&#39;,
+            description: &#39;能够较好地识别潜在风险点，预判准确。&#39;,
+            strengths: [&#39;风险意识强&#39;, &#39;预判及时&#39;],
+            improvements: [&#39;可以提供更多风险应对方案&#39;]
+        }
+    };
+
+    const detail = details[metricType];
+    if (!detail) return;
+
+    // 创建详情模态框
+    const modal = document.createElement(&#39;div&#39;);
+    modal.className = &#39;modal modal-open&#39;;
+    modal.innerHTML = `
+        <div class="modal-box">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-lg">${detail.title}</h3>
+                <button class="btn btn-sm btn-circle btn-ghost" onclick="closeModal()">✕</button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary">${detail.score}</div>
+                    <p class="text-base-content/70 mt-2">${detail.description}</p>
+                </div>
+                
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="bg-success/10 p-3 rounded-lg">
+                        <h4 class="font-medium text-success mb-2">表现优秀</h4>
+                        <ul class="text-sm space-y-1">
+                            ${detail.strengths.map(item => `<li>• ${item}</li>`).join(&#39;&#39;)}
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-warning/10 p-3 rounded-lg">
+                        <h4 class="font-medium text-warning mb-2">改进建议</h4>
+                        <ul class="text-sm space-y-1">
+                            ${detail.improvements.map(item => `<li>• ${item}</li>`).join(&#39;&#39;)}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-backdrop" onclick="closeModal()"></div>
+    `;
+
+    document.body.appendChild(modal);
+}
+
+// 关闭模态框
+function closeModal() {
+    const modal = document.querySelector(&#39;.modal&#39;);
+    if (modal) {
+        modal.remove();
+    }
+}
+
+// 模拟数据更新函数（实际应用中从API获取）
+function updateReportData(reportData) {
+    // 更新综合评分
+    const scoreElement = document.querySelector(&#39;.text-5xl&#39;);
+    if (scoreElement &amp;&amp; reportData.overallScore) {
+        scoreElement.textContent = reportData.overallScore;
+    }
+
+    // 更新各维度评分
+    if (reportData.metrics) {
+        reportData.metrics.forEach(metric => {
+            const progressBar = document.querySelector(`[data-metric="${metric.type}"] .radial-progress`);
+            if (progressBar) {
+                progressBar.style.setProperty(&#39;--value&#39;, metric.score);
+            }
+        });
+    }
+}
+
+// 导出报告功能（占位函数）
+function exportReport() {
+    showToast(&#39;报告导出功能开发中...&#39;, &#39;info&#39;);
+}
+
+// 分享报告功能（占位函数）
+function shareReport() {
+    showToast(&#39;分享功能开发中...&#39;, &#39;info&#39;);
+}
+</script>
+  
+
+<script>
+    setTimeout(() => {
+      Holder.run({
+        domain: "placehold.co"
+      })
+    }, 100)
+  </script></body></html>'></iframe>
+                    </div>
+                  </div>
+
+                </body>
+                </html>
+            
